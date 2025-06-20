@@ -7,23 +7,23 @@
       </div>
 
       <div class="sidenav-content">
-        <div class="nav-links">
-            <a mat-list-item 
-                routerLink="/" 
-                class="nav-link" 
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">
-                <img src="assets/ic_home.png" alt="Inicio" class="nav-icon">
-                <span>Inicio</span>
-                </a>
-            <a mat-list-item routerLink="profile" class="nav-link" routerLinkActive="active">
-                <img src="assets/ic_usuario.png" alt="Perfil" class="nav-icon">
-                <span>Mi Perfil</span>
-            </a>
-            <a mat-list-item routerLink="help" class="nav-link" routerLinkActive="active">
-                <img src="assets/ic_ayuda.png" alt="Ayuda" class="nav-icon">
-                <span>Ayuda</span>
-            </a>
+        <div class="nav-links d-flex flex-column gap-2">
+          <a mat-list-item 
+             routerLink="/" 
+             class="nav-link d-flex align-items-center gap-2 px-2 py-1" 
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{ exact: true }">
+            <img src="assets/ic_home.png" alt="Inicio" class="nav-icon" style="width: 1.7rem; height: 1.7rem; object-fit: contain;" />
+            <span>Inicio</span>
+          </a>
+          <a mat-list-item routerLink="profile" class="nav-link d-flex align-items-center gap-2 px-2 py-1" routerLinkActive="active">
+            <img src="assets/ic_usuario.png" alt="Perfil" class="nav-icon" style="width: 1.7rem; height: 1.7rem; object-fit: contain;" />
+            <span>Mi Perfil</span>
+          </a>
+          <a mat-list-item routerLink="help" class="nav-link d-flex align-items-center gap-2 px-2 py-1" routerLinkActive="active">
+            <img src="assets/ic_ayuda.png" alt="Ayuda" class="nav-icon" style="width: 1.7rem; height: 1.7rem; object-fit: contain;" />
+            <span>Ayuda</span>
+          </a>
         </div>
         <div class="bottom-section">
           <a mat-list-item>

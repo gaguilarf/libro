@@ -1,32 +1,30 @@
-/* Estilos generales */
+/* REFACTORED: Use Bootstrap utilities for layout, spacing, and colors in HTML. Keep only unique overrides and Angular Material styles. */
+
 .main-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Contenedor del sidenav */
 .sidenav-container {
   flex: 1;
   height: 100%;
 }
 
-/* Estilos del sidenav */
 .sidenav {
   width: 280px;
   padding: 20px;
-  background-color: #f0f8ff;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--bs-light, #f0f8ff); /* Use Bootstrap color override */
+  border-right: 1px solid var(--bs-border-color, #e0e0e0);
   display: flex;
   flex-direction: column;
 }
 
-/* Logo y título */
 .logo-container {
   text-align: center;
   padding: 20px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--bs-border-color, #e0e0e0);
 }
 
 .logo {
@@ -37,519 +35,51 @@
 .logo-container h1 {
   margin: 10px 0 0;
   font-size: 1.2rem;
-  color: #333;
-}
-
-/* Sección de acciones */
-.actions-section {
-  margin-bottom: 30px;
+  color: var(--bs-dark, #333);
 }
 
 .actions-section h3 {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--bs-secondary, #666);
   text-transform: uppercase;
   margin: 0 0 10px 16px;
   font-weight: 500;
 }
 
-/* Enlaces de navegación */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.nav-links a {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 12px 16px !important;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  background-color: #e3f2fd;
-  width: 100%;
-  box-sizing: border-box;
-  height: auto !important;
-}
-
-.nav-links a:hover {
-  background-color: #bbdefb;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-/* Override mat-list-item styles */
+/* Navigation links and Angular Material overrides */
 .nav-links .mat-list-item-content {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  padding: 0 !important;
-  width: 100%;
+  padding: 0 8px;
 }
 
 .nav-links .mat-list-text {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  padding: 0 !important;
+  font-size: 1rem;
 }
 
-.nav-links a span {
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-/* Estilo para el enlace activo */
 .nav-links a.active {
-  background-color: #bbdefb;
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--bs-primary, #1976d2) !important;
 }
 
 .bottom-section a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 8px 12px;
-  height: 48px;
-  box-sizing: border-box;
+  color: var(--bs-secondary, #666);
 }
 
-/* Versión */
 .version {
-  text-align: center;
-  color: #888;
   font-size: 0.8rem;
-  padding: 10px 0;
-  border-top: 1px solid #e0e0e0;
-  margin-top: auto;
+  color: var(--bs-secondary, #888);
+  text-align: center;
+  margin-top: 2rem;
 }
 
-/* Contenido principal */
-.content {
-  padding: 20px 40px;
-  background-color: #fafafa;
-}
-
-/* Encabezado */
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
+  background: var(--bs-primary, #1976d2);
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
 }
 
 .header h1 {
+  font-size: 2rem;
   margin: 0;
-  color: #333;
-  font-size: 1.8rem;
-}
-
-/* Contenedor de búsqueda */
-.search-container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.hospitalization-select {
-  min-width: 200px;
-}
-
-.search-input {
-  min-width: 300px;
-}
-
-/* Tabla */
-.table-container {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th.mat-header-cell {
-  background-color: #f5f5f5;
-  color: #333;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 16px;
-  text-align: left;
-}
-
-td.mat-cell {
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
-  color: #444;
-}
-
-tr.mat-row {
-  transition: background-color 0.2s;
-}
-
-tr.mat-row:hover {
-  background-color: #f0f8ff;
-  cursor: pointer;
-}
-
-tr.mat-row.selected {
-  background-color: #e3f2fd;
-  font-weight: 500;
-}
-
-/* Paginador */
-.mat-paginator {
-  background-color: #f5f5f5;
-  border-top: 1px solid #e0e0e0;
-}
-
-/* Estilos para el formulario de paciente */
-.patient-form-container {
-  margin-top: 30px;
-  background: white;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.patient-form-container h2 {
-  color: #333;
-  margin-bottom: 24px;
-  font-size: 1.5rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 12px;
-}
-
-/* Layout horizontal */
-.form-layout {
-  display: flex;
-  gap: 30px;
-}
-
-/* Sección del formulario (izquierda) */
-.patient-form {
-  flex: 3;
-  min-width: 0;
-}
-
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 16px;
-}
-
-.form-field {
-  flex: 1;
-  min-width: 150px;
-}
-
-/* Sección de acciones (derecha) */
-.actions-section {
-  flex: 1;
-  min-width: 250px;
-  padding: 16px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #eee;
-  align-self: flex-start;
-}
-
-.actions-section h3 {
-  color: #555;
-  margin-bottom: 16px;
-  font-size: 1.1rem;
-  text-align: center;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.action-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 16px;
-  height: 40px;
-  white-space: nowrap;
-  transition: all 0.2s;
-}
-
-.action-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 960px) {
-  .form-layout {
-    flex-direction: column;
-  }
-  
-  .actions-section {
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .action-buttons {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  
-  .action-button {
-    flex: 1 1 45%;
-    min-width: 120px;
-  }
-}
-
-/* Ajustes para pantallas muy pequeñas */
-@media (max-width: 600px) {
-  .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .form-field {
-    width: 100%;
-  }
-  
-  .action-button {
-    flex: 1 1 100%;
-  }
-}
-
-/* Estilos responsivos */
-@media (max-width: 1024px) {
-  .action-buttons {
-    flex-direction: column;
-  }
-  
-  .action-button {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .content {
-    padding: 15px;
-  }
-  
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .search-container {
-    flex-direction: column;
-  }
-  
-  .search-input,
-  .hospitalization-select {
-    width: 100%;
-    margin-left: 0;
-    margin-bottom: 10px;
-  }
-}
-
-/* Estilos para los campos de formulario */
-.search-input,
-.hospitalization-select {
-  width: 250px;
-  margin-left: 10px;
-}
-
-/* Remove all borders from form fields */
-.mat-mdc-form-field .mdc-notched-outline,
-.mat-mdc-form-field .mdc-notched-outline__leading,
-.mat-mdc-form-field .mdc-notched-outline__notch,
-.mat-mdc-form-field .mdc-notched-outline__trailing {
-  border: none !important;
-  border-color: transparent !important;
-}
-
-.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-outline {
-  display: none !important;
-}
-
-/* Consistent form field margins and padding */
-.mat-mdc-form-field {
-  margin: 0 10px !important;
-}
-
-.mat-mdc-form-field-infix {
-  min-width: 0 !important;
-  width: 100% !important;
-  padding: 8px 0 !important;
-}
-
-.mat-mdc-text-field-wrapper {
-  padding: 0 10px !important;
-}
-
-.mat-mdc-form-field-appearance-outline .mat-mdc-form-field-infix {
-  padding: 8px 0 !important;
-}
-
-/* Ensure form fields have white background */
-.mat-mdc-form-field {
-  background-color: white;
-  border-radius: 4px;
-  height: 60px;
-  overflow: hidden;
-}
-
-/* Style the select panel */
-.mat-mdc-select-panel {
-  background: white !important;
-  border: none !important;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-}
-
-/* Remove focus borders */
-.mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay {
-  opacity: 0 !important;
-}
-
-/* Remove borders from input fields */
-.mdc-text-field--outlined .mdc-notched-outline {
-  border: none !important;
-}
-
-::ng-deep .mat-mdc-select-arrow svg {
-  transform: translate(-100%, -50%) !important;
-}
-
-
-/* Remove borders from select elements */
-.mat-mdc-select-arrow-wrapper {
-  border: none !important;
-}
-
-/* Remove borders from paginator */
-.mat-mdc-paginator {
-  border: none !important;
-}
-
-/* Remove borders from table */
-.mat-mdc-table {
-  border: none !important;
-}
-
-/* Remove cell borders */
-.mat-mdc-cell, .mat-mdc-header-cell {
-  border: none !important;
-}
-
-/* Remove row borders */
-.mat-mdc-row {
-  border: none !important;
-}
-
-.mat-mdc-option,
-.mat-mdc-option:hover,
-.mat-mdc-option:focus,
-.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
-  background-color: #ffffff;
-}
-/* Style the selected option */
-.mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text,
-.mat-mdc-option .mdc-list-item__primary-text {
-  padding-left: 10px !important;
-}
-
-/* Style for the select with label */
-.select-with-label {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-
-.select-label {
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.6);
-  white-space: nowrap;
-}
-
-/* Style for paginator */
-.mat-mdc-paginator {
-  background: transparent !important;
-  border-top: none !important;
-}
-
-.mat-mdc-paginator-page-size {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mat-mdc-paginator-page-size-label {
-  margin: 0 8px 0 0;
-}
-
-/* Ensure select text in paginator is centered */
-.mat-mdc-select-value-text {
-  text-align: center;
-  display: block;
-  width: 100%;
-}
-
-/* Center align the version text */
-.version {
-  text-align: center;
-  width: 100%;
-  padding-left: 0;
-  margin-left: 0;
-  color: #666;
-  font-size: 0.8rem;
-}
-
-.mat-mdc-text-field-wrapper {
-  border-radius: 20px !important;
-}
-
-/* Estilos para el chip de ubicación */
-.mat-chip {
-  font-size: 0.8rem;
-  padding: 4px 8px;
-  border-radius: 12px;
-}
-
-/* Estilos para los enlaces activos */
-.mat-list-item.active {
-  background-color: rgba(0, 0, 0, 0.04);
-  color: #3f51b5;
-  font-weight: 500;
-}
-
-.mat-list-item.active .mat-icon {
-  color: #3f51b5;
 }

@@ -17,7 +17,7 @@ export class SidebarMenuComponent {
       title: 'Inicio',
       icon: 'bi-house',
       route: '/inicio',
-      submodules: [] // directo
+      submodules: []
     },
     {
       title: 'Usuarios',

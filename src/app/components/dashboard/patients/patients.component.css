@@ -1,32 +1,30 @@
-/* Estilos generales */
+/* REFACTORED: Use Bootstrap utilities for layout, spacing, and colors in HTML. Keep only unique overrides and Angular Material styles. */
+
 .main-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Contenedor del sidenav */
 .sidenav-container {
   flex: 1;
   height: 100%;
 }
 
-/* Estilos del sidenav */
 .sidenav {
   width: 280px;
   padding: 20px;
-  background-color: #f0f8ff;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--bs-light, #f0f8ff);
+  border-right: 1px solid var(--bs-border-color, #e0e0e0);
   display: flex;
   flex-direction: column;
 }
 
-/* Logo y título */
 .logo-container {
   text-align: center;
   padding: 20px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--bs-border-color, #e0e0e0);
 }
 
 .logo {
@@ -37,192 +35,10 @@
 .logo-container h1 {
   margin: 10px 0 0;
   font-size: 1.2rem;
-  color: #333;
+  color: var(--bs-dark, #333);
 }
 
-/* Sección de acciones */
-.actions-section {
-  margin-bottom: 30px;
-}
-
-.actions-section h3 {
-  font-size: 0.9rem;
-  color: #666;
-  text-transform: uppercase;
-  margin: 0 0 10px 16px;
-  font-weight: 500;
-}
-
-/* Enlaces de navegación */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.nav-links a {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 12px 16px !important;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  background-color: #e3f2fd;
-  width: 100%;
-  box-sizing: border-box;
-  height: auto !important;
-}
-
-.nav-links a:hover {
-  background-color: #bbdefb;
-}
-
-.nav-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-/* Override mat-list-item styles */
-.nav-links .mat-list-item-content {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  padding: 0 !important;
-  width: 100%;
-}
-
-.nav-links .mat-list-text {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center;
-  padding: 0 !important;
-}
-
-.nav-links a span {
-  font-size: 0.9rem;
-  line-height: 1.2;
-}
-
-/* Estilo para el enlace activo */
-.nav-links a.active {
-  background-color: #bbdefb;
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
-}
-
-.bottom-section a {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 8px 12px;
-  height: 48px;
-  box-sizing: border-box;
-}
-
-/* Versión */
-.version {
-  text-align: center;
-  color: #888;
-  font-size: 0.8rem;
-  padding: 10px 0;
-  border-top: 1px solid #e0e0e0;
-  margin-top: auto;
-}
-
-/* Contenido principal */
-.content {
-  padding: 20px 40px;
-  background-color: #fafafa;
-}
-
-/* Encabezado */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.header h1 {
-  margin: 0;
-  color: #333;
-  font-size: 1.8rem;
-}
-
-/* Contenedor de búsqueda */
-.search-container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.hospitalization-select {
-  min-width: 200px;
-}
-
-.search-input {
-  min-width: 300px;
-}
-
-/* Tabla */
-.table-container {
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th.mat-header-cell {
-  background-color: #f5f5f5;
-  color: #333;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 16px;
-  text-align: left;
-}
-
-td.mat-cell {
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
-  color: #444;
-}
-
-tr.mat-row {
-  transition: background-color 0.2s;
-}
-
-tr.mat-row:hover {
-  background-color: #f0f8ff;
-  cursor: pointer;
-}
-
-tr.mat-row.selected {
-  background-color: #e3f2fd;
-  font-weight: 500;
-}
-
-/* Paginador */
-.mat-paginator {
-  background-color: #f5f5f5;
-  border-top: 1px solid #e0e0e0;
-}
+/* Remove redundant custom styles: use Bootstrap flex, gap, spacing, and color utilities in HTML. */
 
 /* Estilos para el formulario de paciente */
 .patient-form-container {
@@ -442,6 +258,9 @@ tr.mat-row.selected {
   border: none !important;
 }
 
+::ng-deep .mdc-notched-outline {
+  top: 3px !important;
+}
 ::ng-deep .mat-mdc-select-arrow svg {
   transform: translate(-100%, -50%) !important;
 }
@@ -556,4 +375,47 @@ tr.mat-row.selected {
 
 .selected {
   background-color: #e3f2fd !important; /* Azul claro */
+}
+
+.patient-form-container .mat-form-field {
+  min-height: 56px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border: 1px solid #d1d5db;
+  margin-bottom: 1rem;
+}
+
+.patient-form-container .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-radius: 12px;
+}
+
+.patient-form-container .mat-form-field-infix {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.patient-form-container input,
+.patient-form-container textarea {
+  min-height: 38px;
+  height: 38px;
+  line-height: 1.2;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.patient-form-container textarea {
+  min-height: 80px;
+  height: auto;
+}
+
+.patient-form-container .mat-form-field-label {
+  background: #fff;
+  padding: 0 4px;
+  border-radius: 8px;
+  left: 12px !important;
 }

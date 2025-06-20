@@ -1,14 +1,18 @@
-<div [ngClass]="{'d-none': collapsed, 'sidebar': true, 'bg-light': true, 'p-3': true}" style="width: 250px; min-height: 100vh;">
-  <h5 class="mb-4">Menú</h5>
+<div [ngClass]="{'sidebar': true, 'bg-light': true, 'p-3': true, 'collapsed': collapsed}" style="min-height: 100vh; position: relative; transition: width 0.3s;">
+  <button class="btn btn-light toggle-btn" (click)="toggle.emit()" style="position: absolute; top: 10px; right: -18px; z-index: 2; border-radius: 50%; box-shadow: 0 0 4px #ccc;">
+    <i class="bi" [ngClass]="collapsed ? 'bi-chevron-right' : 'bi-chevron-left'"></i>
+  </button>
+  <h5 class="mb-4" *ngIf="!collapsed">Menú</h5>
   <ul class="list-unstyled">
     <li *ngFor="let module of modules">
       <div class="d-flex align-items-center justify-content-between mb-2">
         <div (click)="toggleSubmenu(module)" class="cursor-pointer">
-          <i class="bi me-2" [ngClass]="module.icon"></i> {{ module.title }}
+          <i class="bi me-2" [ngClass]="module.icon"></i>
+          <span *ngIf="!collapsed">{{ module.title }}</span>
         </div>
-        <i class="bi" [ngClass]="module.open ? 'bi-caret-down-fill' : 'bi-caret-right-fill'" (click)="toggleSubmenu(module)"></i>
+        <i *ngIf="!collapsed" class="bi" [ngClass]="module.open ? 'bi-caret-down-fill' : 'bi-caret-right-fill'" (click)="toggleSubmenu(module)"></i>
       </div>
-      <ul *ngIf="module.open" class="list-unstyled ms-4">
+      <ul *ngIf="module.open && !collapsed" class="list-unstyled ms-4">
         <li *ngFor="let sub of module.submodules" class="mb-1">
           <a (click)="navigate(sub.route)" class="text-decoration-none text-dark cursor-pointer">{{ sub.name }}</a>
         </li>

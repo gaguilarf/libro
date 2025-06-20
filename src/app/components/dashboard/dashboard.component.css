@@ -1,3 +1,5 @@
+/* REFACTORED: Use Bootstrap utilities for grid, spacing, and colors in HTML. Keep only unique overrides. */
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -12,10 +14,10 @@
   justify-content: center;
   aspect-ratio: 1 / 1;
   border-radius: 12px;
-  background-color: #f1f1f1;
+  background-color: var(--bs-light, #f1f1f1);
   text-align: center;
   text-decoration: none;
-  color: #333;
+  color: var(--bs-dark, #333);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 }
@@ -26,6 +28,8 @@
 }
 
 .tile-icon {
-  font-size: 3.5rem; /* Agranda el ícono Bootstrap */
+  font-size: 3.5rem;
   margin-bottom: 8px;
 }
+
+/* Remove redundant custom styles: use Bootstrap grid, spacing, and color utilities in HTML. */
