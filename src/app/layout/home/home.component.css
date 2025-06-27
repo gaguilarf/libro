@@ -13,18 +13,23 @@
 
 .sidenav {
   width: 280px;
-  padding: 20px;
-  background-color: var(--bs-light, #f0f8ff); /* Use Bootstrap color override */
+  padding: 15px; /* Reducir padding */
+  background-color: var(--bs-light, #f0f8ff);
   border-right: 1px solid var(--bs-border-color, #e0e0e0);
   display: flex;
   flex-direction: column;
+  height: 100vh !important;
+  overflow: hidden !important;
+  max-height: 100vh !important;
+  box-sizing: border-box !important;
 }
 
 .logo-container {
   text-align: center;
-  padding: 20px 0;
-  margin-bottom: 20px;
+  padding: 10px 0; /* Más pequeño */
+  margin-bottom: 10px; /* Más pequeño */
   border-bottom: 1px solid var(--bs-border-color, #e0e0e0);
+  flex-shrink: 0;
 }
 
 .logo {
@@ -46,13 +51,33 @@
   font-weight: 500;
 }
 
+.sidenav-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  height: calc(100vh - 120px); /* Ajustar para dar más espacio al bottom */
+}
+
 /* Navigation links and Angular Material overrides */
+.nav-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  padding-right: 5px;
+  margin-bottom: 10px;
+  max-height: calc(100vh - 270px);
+}
+
 .nav-links .mat-list-item-content {
   padding: 0 8px;
 }
 
 .nav-links .mat-list-text {
-  font-size: 1rem;
+  font-size: 1.1rem; /* Aumentar tamaño de fuente */
 }
 
 .nav-links a.active {
@@ -60,26 +85,79 @@
   color: var(--bs-primary, #1976d2) !important;
 }
 
-.bottom-section a {
-  color: var(--bs-secondary, #666);
+/* Agregar espacio entre ícono y texto y aumentar tamaño */
+.nav-links .nav-icon {
+  margin-right: 12px !important;
+  width: 2rem !important; /* Aumentar tamaño del ícono */
+  height: 2rem !important; /* Aumentar tamaño del ícono */
 }
 
+/* Aumentar padding para mejor proporción */
+.nav-links .nav-link {
+  padding: 0.75rem 0.5rem !important; /* Aumentar padding vertical */
+}
+
+.bottom-section {
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--bs-border-color, #e0e0e0);
+  height: 72px; /* Aumentar un poco más para ver la versión completa */
+  display: flex;
+  padding-inline: 20px;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* Estilo del elemento de logout */
+.logout-item {
+  color: var(--bs-secondary, #666);
+  margin-bottom: 0.25rem; /* Reducir margen */
+  cursor: pointer;
+  padding: 0.4rem; /* Reducir padding */
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease;
+}
+
+.logout-item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Eliminar decoraciones de Material */
+.logout-item .mat-list-item-content {
+  padding: 0 !important;
+}
+
+/* Estilo de la versión */
 .version {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--bs-secondary, #888);
   text-align: center;
-  margin-top: 2rem;
-}
-
-.header {
-  background: var(--bs-primary, #1976d2);
-  color: #fff;
-  padding: 1rem 2rem;
-  border-radius: 0.5rem;
-  margin-bottom: 2rem;
-}
-
-.header h1 {
-  font-size: 2rem;
+  padding: 0.2rem 0; /* Reducir padding */
   margin: 0;
+}
+
+/* Forzar override más agresivo de Angular Material */
+::ng-deep .mat-drawer {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  max-height: 100vh !important;
+  padding: 0 !important; /* Quitar padding de Material */
+}
+
+::ng-deep .mat-drawer.mat-drawer-side {
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  max-height: 100vh !important;
+}
+
+::ng-deep .mat-sidenav-container {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+}
+
+/* Forzar que el contenido del drawer no haga scroll */
+::ng-deep .mat-drawer-inner-container {
+  overflow: hidden !important;
+  height: 100% !important;
 }

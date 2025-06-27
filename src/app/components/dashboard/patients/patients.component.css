@@ -38,7 +38,9 @@
   color: var(--bs-dark, #333);
 }
 
-/* Remove redundant custom styles: use Bootstrap flex, gap, spacing, and color utilities in HTML. */
+h1 {
+  padding-left: 10px;
+}
 
 /* Estilos para el formulario de paciente */
 .patient-form-container {
@@ -120,6 +122,193 @@
 .action-button:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Estilos para la sección de acciones del paciente */
+.patient-actions-container {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.patient-actions-container .card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-actions-container .card-header {
+  background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 1rem 1.5rem;
+}
+
+.patient-actions-container .card-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.patient-actions-container .btn-close {
+  filter: invert(1);
+}
+
+.patient-actions-container .card-body {
+  padding: 1.5rem;
+}
+
+.card{
+  margin-inline: 10px;
+}
+
+::ng-deep .nav-links {
+  padding-left: 10px !important;
+}
+
+::ng-deep .gap-2 {
+  gap: 0rem !important;
+}
+
+.patient-actions-container .btn {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Botones con el esquema de colores del proyecto */
+.patient-actions-container .btn-primary {
+  background: #f0f8ff;
+  color: #3f51b5;
+  border: 2px solid #3f51b5;
+}
+
+.patient-actions-container .btn-success {
+  background: #f0f8ff;
+  color: #4caf50;
+  border: 2px solid #4caf50;
+}
+
+.patient-actions-container .btn-warning {
+  background: #f0f8ff;
+  color: #ff9800;
+  border: 2px solid #ff9800;
+}
+
+.patient-actions-container .btn-info {
+  background: #f0f8ff;
+  color: #2196f3;
+  border: 2px solid #2196f3;
+}
+
+.patient-actions-container .btn-secondary {
+  background: #f0f8ff;
+  color: #607d8b;
+  border: 2px solid #607d8b;
+}
+
+.patient-actions-container .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.patient-actions-container .btn-primary:hover {
+  background: #3f51b5;
+  color: white;
+}
+
+.patient-actions-container .btn-success:hover {
+  background: #4caf50;
+  color: white;
+}
+
+.patient-actions-container .btn-warning:hover {
+  background: #ff9800;
+  color: white;
+}
+
+.patient-actions-container .btn-info:hover {
+  background: #2196f3;
+  color: white;
+}
+
+.patient-actions-container .btn-secondary:hover {
+  background: #607d8b;
+  color: white;
+}
+
+.patient-actions-container .btn i {
+  font-size: 1.1rem;
+}
+
+/* Botones personalizados con colores consistentes del sistema */
+.btn-custom {
+  background-color: #f0f8ff;
+  border: 2px solid #3f51b5;
+  color: #3f51b5;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(8, 127, 185, 0.3);
+}
+
+.btn-custom:focus,
+.btn-custom:active {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25);
+}
+
+.btn-close-custom {
+  background-color: #f0f8ff;
+  border: 2px solid #666;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.btn-close-custom:hover {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(8, 127, 185, 0.3);
+}
+
+.btn-close-custom:focus,
+.btn-close-custom:active {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25);
+}
+
+/* Espaciado profesional para los botones */
+.patient-actions-container .btn {
+  min-width: 140px;
 }
 
 /* Ajustes para pantallas pequeñas */
@@ -374,7 +563,12 @@
 }
 
 .selected {
-  background-color: #e3f2fd !important; /* Azul claro */
+  background-color: #f0f8ff !important; /* Color consistente del sistema */
+  border-left: 4px solid #3f51b5; /* Borde izquierdo para mejor visibilidad */
+}
+
+.selected:hover {
+  background-color: #e6f3ff !important; /* Ligeramente más oscuro en hover */
 }
 
 .patient-form-container .mat-form-field {
@@ -418,4 +612,65 @@
   padding: 0 4px;
   border-radius: 8px;
   left: 12px !important;
+}
+
+/* Estilos para las filas de la tabla */
+.patient-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.patient-row:hover {
+  background-color: #f5f5f5;
+}
+
+.patient-row:active {
+  background-color: #e0e0e0;
+}
+
+/* Color de selección consistente con el sistema */
+.selected {
+  background-color: #f0f8ff !important; /* Color consistente del sistema */
+  border-left: 4px solid #3f51b5; /* Borde izquierdo para mejor visibilidad */
+}
+
+.selected:hover {
+  background-color: #e6f3ff !important; /* Ligeramente más oscuro en hover */
+}
+
+/* Mejorar el paginador */
+.mat-paginator {
+  border-radius: 0 0 8px 8px;
+}
+
+/* Ocultar elementos innecesarios del paginador */
+::ng-deep .mat-paginator-page-size {
+  display: none !important;
+}
+
+::ng-deep .mat-paginator-range-label {
+  display: none !important;
+}
+
+::ng-deep .mat-paginator-page-size-label {
+  display: none !important;
+}
+
+/* Ocultar cualquier texto de rango adicional */
+::ng-deep .mat-mdc-paginator-range-label {
+  display: none !important;
+}
+
+::ng-deep .mat-paginator-range-actions .mat-paginator-range-label {
+  display: none !important;
+}
+
+/* Centrar los controles de navegación del paginador */
+::ng-deep .mat-paginator-range-actions {
+  justify-content: center;
+  gap: 10px;
+}
+
+::ng-deep .gap-3 {
+  padding-right: 10px !important;
 }

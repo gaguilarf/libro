@@ -1,0 +1,174 @@
+<div class="patient-detail-container">
+  
+  <!-- Header -->
+  <div class="header d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <button class="btn btn-link text-primary p-0 me-3" (click)="goBack()">
+        <i class="bi bi-arrow-left me-1"></i>
+        Regresar
+      </button>
+    </div>
+    
+    <div class="user-info d-flex align-items-center">
+      <img src="assets/ic_usuario.png" alt="Usuario" class="user-avatar me-2">
+      <div>
+        <div class="fw-bold">Dr. Marcelo</div>
+        <div class="text-muted small">marcela.com</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2">Cargando información del paciente...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-danger">
+    <i class="bi bi-exclamation-triangle me-2"></i>
+    {{ error }}
+  </div>
+
+  <!-- Patient Info -->
+  <div *ngIf="patient && !isLoading" class="patient-info">
+    
+    <!-- Patient Name and Basic Info -->
+    <div class="patient-header">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h2 class="patient-name mb-1">{{ patient.nombre }} {{ formatValue(patient.apellidoPaterno) }} {{ formatValue(patient.apellidoMaterno) }}</h2>
+          <p class="patient-dni text-muted mb-0">DNI: {{ patient.dni }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <div class="hospital-info">
+            <div class="fw-bold">Hospitalización</div>
+            <div class="text-primary fw-bold">Cama: {{ formatValue(patient.cama) }}</div>
+          </div>
+          <div class="hospital-logo mt-2">
+            <img src="assets/logo.jpeg" alt="Hospital Logo" class="logo-small">
+            <div class="hospital-name">Honorio Delgado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="mb-0">DATOS DE AFILIACIÓN</h3>
+      </div>
+      <div class="card-body">
+        <!-- Row 1 -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label text-muted">Nombre:</label>
+            <div class="form-control-plaintext">{{ patient.nombre }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">DNI:</label>
+            <div class="form-control-plaintext">{{ patient.dni }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Sexo:</label>
+            <div class="form-control-plaintext text-capitalize">{{ patient.sexo }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Edad:</label>
+            <div class="form-control-plaintext">{{ patient.edad }}</div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label text-muted">Ap. Paterno:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.apellidoPaterno) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Ap. Materno:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.apellidoMaterno) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Religión:</label>
+            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.religion) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Grupo sanguíneo:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.grupoSanguineo) }}</div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label text-muted">Fec. Nac.:</label>
+            <div class="form-control-plaintext">{{ formatDate(patient.fecNac) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Factor RH:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.factorRH) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Ocupación:</label>
+            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.ocupacion) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Familiar encargado:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.familiarEncargado) }}</div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <label class="form-label text-muted">Lugar Nac.:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.lugarNac) }}</div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label text-muted">Est. Civil:</label>
+            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.estCivil) }}</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label text-muted">Dirección:</label>
+            <div class="form-control-plaintext">{{ formatValue(patient.direccion) }}</div>
+          </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="row">
+          <div class="col-md-3">
+            <label class="form-label text-muted">Grado Inst.:</label>
+            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.gradoInst) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Section -->
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="mb-0">Historia de la Enfermedad</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label text-muted">Fecha ingreso</label>
+            <div class="row">
+              <div class="col-6">
+                <label class="form-label small">Desde:</label>
+                <div class="form-control-plaintext">{{ formatDate(patient.fecNac) }}</div>
+              </div>
+              <div class="col-6">
+                <label class="form-label small">Hasta:</label>
+                <div class="form-control-plaintext">30/05/2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

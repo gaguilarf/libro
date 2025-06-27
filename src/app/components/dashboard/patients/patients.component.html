@@ -1,7 +1,18 @@
 <div class="header">
   <h1>Lista de Pacientes</h1>
 
-  <div class="d-flex align-items-center flex-wrap gap-3 mt-3">
+  <!-- CORS Warning Message -->
+  <div *ngIf="showCorsMessage" class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <strong>Conectividad limitada:</strong> No se puede conectar directamente al servidor debido a políticas CORS. 
+    Mostrando datos de ejemplo. 
+    <button type="button" class="btn btn-sm btn-outline-primary ms-2" (click)="retryApiConnection()">
+      <i class="bi bi-arrow-clockwise me-1"></i>Reintentar
+    </button>
+    <button type="button" class="btn-close" (click)="dismissCorsMessage()"></button>
+  </div>
+
+  <div class="d-flex align-items-center flex-wrap gap-3 mt-3 justify-content-end">
     <!-- Input de búsqueda con ícono -->
     <div class="input-group" style="width: 300px;">
       <span class="input-group-text bg-white border-end-0">
@@ -29,8 +40,15 @@
   </div>
 </div>
 
+<!-- Loading indicator -->
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-4">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+  <span class="ms-2">Cargando pacientes...</span>
+</div>
 
-<div class="table-container">
+<div class="table-container" [class.d-none]="isLoading">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
     <ng-container matColumnDef="dni">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>DNI</th>
@@ -67,259 +85,127 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row 
       *matRowDef="let row; columns: displayedColumns;"
-      [class.selected]="selectedPatient === row"
-      (click)="selectPatient(row)">
+      (click)="selectPatient(row)"
+      class="patient-row"
+      [class.selected]="selectedPaciente?.dni === row.dni">
   </tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Seleccionar página"></mat-paginator>
+  <mat-paginator [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 20, 50]"
+                 [hidePageSize]="false"
+                 [showFirstLastButtons]="true"
+                 [length]="totalRecords"
+                 aria-label="Seleccionar página">
+  </mat-paginator>
 </div>
 
-<!-- Formulario -->
-<div class="patient-form-container" *ngIf="selectedPatient">
-  <div class="row">
-    <div class="col-lg-9">
-      <h2>Datos de Filiación</h2>
-      <form [formGroup]="patientForm" class="patient-form">
-        <div class="row g-3">
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Nombre</mat-label>
-              <input matInput formControlName="nombre">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Ap. Paterno</mat-label>
-              <input matInput formControlName="apellidoPaterno">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Ap. Materno</mat-label>
-              <input matInput formControlName="apellidoMaterno">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Fec. Nac.</mat-label>
-              <input matInput type="date" formControlName="fechaNacimiento">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Lugar Nac.</mat-label>
-              <input matInput formControlName="lugarNacimiento">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Dirección</mat-label>
-              <input matInput formControlName="direccion">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Est. Civil</mat-label>
-              <input matInput formControlName="estadoCivil">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Grado Inst.</mat-label>
-              <input matInput formControlName="gradoInstruccion">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>DNI</mat-label>
-              <input matInput formControlName="dni">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Sexo</mat-label>
-              <input matInput formControlName="sexo">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Edad</mat-label>
-              <input matInput type="number" formControlName="edad">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Religión</mat-label>
-              <input matInput formControlName="religion">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Grupo sanguíneo</mat-label>
-              <input matInput formControlName="grupoSanguineo">
-            </mat-form-field>
-          </div>
-          <div class="col-md-2">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Factor RH</mat-label>
-              <input matInput formControlName="factorRH">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Ocupación</mat-label>
-              <input matInput formControlName="ocupacion">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Familiar encargado</mat-label>
-              <input matInput formControlName="familiarEncargado">
-            </mat-form-field>
-          </div>
-          <div class="col-md-4">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Estado Actual</mat-label>
-              <input matInput formControlName="estadoActual">
-            </mat-form-field>
+<!-- Sección de acciones del paciente seleccionado - Rediseñada con botones arriba -->
+<div *ngIf="selectedPaciente" class="patient-actions-container mt-4">
+  
+  <!-- Botones de acción - Arriba del formulario alineados a la derecha con tamaño normal -->
+  <div class="d-flex justify-content-end gap-3 mb-4">
+    <button type="button" class="btn btn-custom px-3" (click)="interconsulta()">
+      <i class="bi bi-arrow-left-right me-2"></i>
+      Interconsulta
+    </button>
+    
+    <button type="button" class="btn btn-custom px-3" (click)="visualizar()">
+      <i class="bi bi-eye me-2"></i>
+      Visualizar
+    </button>
+    
+    <button type="button" class="btn btn-custom px-3" (click)="agregar()">
+      <i class="bi bi-plus-circle me-2"></i>
+      Agregar
+    </button>
+    
+    <button type="button" class="btn btn-close-custom" (click)="cerrarAcciones()">
+      <i class="bi bi-x-circle me-2"></i>
+      Cerrar
+    </button>
+  </div>
+  
+  <!-- Información del paciente seleccionado -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <!-- Primera fila: Estado Actual, DNI, Serv. Responsable, Prof. Responsable -->
+      <div class="row">
+        <div class="col-md-2">
+          <label class="form-label text-muted">Estado Actual</label>
+          <select class="form-select">
+            <option>Hospitalización</option>
+            <option>Emergencia</option>
+            <option>Consulta Externa</option>
+          </select>
+        </div>
+        
+        <div class="col-md-2">
+          <label class="form-label text-muted">DNI</label>
+          <input type="text" class="form-control" [value]="selectedPaciente.dni" readonly>
+        </div>
+        
+        <div class="col-md-2">
+          <label class="form-label text-muted">Serv. Responsable</label>
+          <input type="text" class="form-control" value="Psiquiatría" readonly>
+        </div>
+        
+        <div class="col-md-3">
+          <label class="form-label text-muted">Prof. Responsable</label>
+          <input type="text" class="form-control" value="Jaime Huerta" readonly>
+        </div>
+      </div>
+      
+      <!-- Segunda fila: Fecha ingreso (Desde/Hasta), Nombre (Ap. Paterno/Ap. Materno), Sexo (Edad/Religión) -->
+      <div class="row mt-3">
+        <div class="col-md-4">
+          <label class="form-label text-muted">Fecha ingreso</label>
+          <div>
+            <div class="mb-2">
+              <label class="form-label small">Desde:</label>
+              <input type="text" class="form-control" [value]="selectedPaciente.fecha" readonly>
+            </div>
+            <div>
+              <label class="form-label small">Hasta:</label>
+              <input type="text" class="form-control" [value]="selectedPaciente.fecha" readonly>
+            </div>
           </div>
         </div>
-        <hr class="my-4" />
-        <h5>Historia de la Enfermedad</h5>
-        <div class="row g-3 align-items-end">
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Fecha ingreso</mat-label>
-              <input matInput type="date" formControlName="fechaIngreso">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Desde</mat-label>
-              <input matInput type="date" formControlName="fechaDesde">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Hasta</mat-label>
-              <input matInput type="date" formControlName="fechaHasta">
-            </mat-form-field>
+        
+        <div class="col-md-4">
+          <label class="form-label text-muted">Nombre</label>
+          <input type="text" class="form-control mb-2" [value]="selectedPaciente.nombre" readonly>
+          
+          <div class="d-flex gap-2">
+            <div class="flex-fill">
+              <label class="form-label small">Ap. Paterno:</label>
+              <input type="text" class="form-control" value="Alvarez" readonly>
+            </div>
+            <div class="flex-fill">
+              <label class="form-label small">Ap. Materno:</label>
+              <input type="text" class="form-control" value="Jimenez" readonly>
+            </div>
           </div>
         </div>
-        <div class="row g-3 mt-2">
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Tiempo de enfermedad</mat-label>
-              <input matInput formControlName="tiempoEnfermedad">
-            </mat-form-field>
+        
+        <div class="col-md-4">
+          <label class="form-label text-muted">Sexo</label>
+          <input type="text" class="form-control mb-2" value="Masculino" readonly>
+          
+          <div class="d-flex gap-2">
+            <div class="flex-fill">
+              <label class="form-label small">Edad:</label>
+              <input type="text" class="form-control" [value]="selectedPaciente.edad" readonly>
+            </div>
+            <div class="flex-fill">
+              <label class="form-label small">Religión:</label>
+              <input type="text" class="form-control" value="Católica" readonly>
+            </div>
           </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Forma de inicio</mat-label>
-              <input matInput formControlName="formaInicio">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Curso</mat-label>
-              <input matInput formControlName="curso">
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row g-3 mt-2">
-          <div class="col-12">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Síntomas y signos principales</mat-label>
-              <input matInput formControlName="sintomasPrincipales">
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row g-3 mt-2">
-          <div class="col-12">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Anamnesis</mat-label>
-              <textarea matInput rows="4" formControlName="anamnesis"></textarea>
-            </mat-form-field>
-          </div>
-        </div>
-        <hr class="my-4" />
-        <h5>Funciones Biológicas</h5>
-        <div class="row g-3">
-          <div class="col-md-2" *ngFor="let key of ['apetito','sed','sueño','deposicion','miccion','deseoSexual']">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>{{ key | titlecase }}</mat-label>
-              <input matInput [formControlName]="key">
-            </mat-form-field>
-          </div>
-        </div>
-        <hr class="my-4" />
-        <h5>Antecedentes</h5>
-        <div class="row g-3">
-          <div class="col-12">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Personales</mat-label>
-              <textarea matInput rows="3" formControlName="personales"></textarea>
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Inicio de Relaciones Sexuales</mat-label>
-              <input matInput formControlName="inicioRelacionesSexuales">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>MAC</mat-label>
-              <input matInput formControlName="mac">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Parejas Sentimentales</mat-label>
-              <input matInput formControlName="parejasSentimentales">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>RC</mat-label>
-              <input matInput formControlName="rc">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Abuso Sexual</mat-label>
-              <input matInput formControlName="abusoSexual">
-            </mat-form-field>
-          </div>
-          <div class="col-md-3">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>FUR</mat-label>
-              <input matInput formControlName="fur">
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row g-3 mt-2">
-          <div class="col-12">
-            <mat-form-field appearance="outline" class="w-100">
-              <mat-label>Historia Académica</mat-label>
-              <textarea matInput rows="3" formControlName="historiaAcademica"></textarea>
-            </mat-form-field>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col-lg-3 d-flex flex-column align-items-stretch justify-content-start">
-      <div class="actions-section mt-3 mt-lg-0">
-        <h3>Acciones</h3>
-        <div class="action-buttons">
-          <button mat-raised-button color="primary" class="action-button">Agregar historia</button>
-          <button mat-raised-button color="accent" class="action-button">Nueva solicitud</button>
-          <button mat-raised-button color="warn" class="action-button">Interconsulta</button>
-          <button mat-raised-button class="action-button">Ingresar notas de enfermería</button>
-          <button mat-raised-button class="action-button">Ingresar receta médica</button>
         </div>
       </div>
     </div>
   </div>
+  
 </div>
+

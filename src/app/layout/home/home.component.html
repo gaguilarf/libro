@@ -3,13 +3,14 @@
     <mat-sidenav #sidenav mode="side" opened class="sidenav">
       <div class="logo-container">
         <img src="assets/logo.jpeg" alt="Logo" class="logo">
+        <h1>Hospital Regional III</h1>
         <h1>Honorio Delgado</h1>
       </div>
 
-      <div class="sidenav-content">
-        <div class="nav-links d-flex flex-column gap-2">
+      <div class="sidenav-content d-flex flex-column h-100">
+        <div class="nav-links d-flex flex-column gap-2 flex-grow-1">
           <a mat-list-item 
-             routerLink="/" 
+             routerLink="patients" 
              class="nav-link d-flex align-items-center gap-2 px-2 py-1" 
              routerLinkActive="active"
              [routerLinkActiveOptions]="{ exact: true }">
@@ -25,11 +26,16 @@
             <span>Ayuda</span>
           </a>
         </div>
+        
         <div class="bottom-section">
-          <a mat-list-item>
+          <div class="logout-item d-flex align-items-center justify-content-between px-2 py-1">
             <span>Cerrar Sesión</span>
-          </a>
-          <div class="version">Versión 2.0</div>
+            <img src="assets/ic_logout.png" alt="Cerrar Sesión" class="nav-icon" style="width: 1.7rem; height: 1.7rem; object-fit: contain;" />
+          </div>
+          
+          <div class="version">
+            Versión 2.0
+          </div>
         </div>
       </div>
     </mat-sidenav>
