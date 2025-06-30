@@ -13,7 +13,6 @@
   </div>
 
   <div class="d-flex align-items-center flex-wrap gap-3 mt-3 justify-content-end">
-    <!-- Input de búsqueda con ícono -->
     <div class="input-group" style="width: 300px;">
       <span class="input-group-text bg-white border-end-0">
         <i class="bi bi-search"></i>
@@ -25,7 +24,6 @@
         (keyup)="applyFilter($event)">
     </div>
 
-    <!-- Selector de tipo de servicio -->
     <div class="input-group" style="width: 260px;">
       <span class="input-group-text bg-white border-end-0">
         <i class="bi bi-ui-checks"></i>
@@ -93,11 +91,12 @@
 
   <mat-paginator [pageSize]="pageSize"
                  [pageSizeOptions]="[5, 10, 20, 50]"
-                 [hidePageSize]="false"
+                 [hidePageSize]="true"
                  [showFirstLastButtons]="true"
                  [length]="totalRecords"
                  aria-label="Seleccionar página">
   </mat-paginator>
+
 </div>
 
 <!-- Sección de acciones del paciente seleccionado - Rediseñada con botones arriba -->
@@ -207,5 +206,45 @@
     </div>
   </div>
   
+</div>
+
+<!-- Modal de Interconsulta -->
+<div *ngIf="showInterconsultaModal" class="modal-overlay" (click)="closeInterconsultaModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <!-- Header del modal -->
+    <div class="modal-header">
+      <h3 class="modal-title">Interconsulta</h3>
+      <button type="button" class="btn-close-modal" (click)="closeInterconsultaModal()">
+        <i class="bi bi-x-circle"></i>
+      </button>
+    </div>
+
+    <!-- Body del modal -->
+    <div class="modal-body">
+      
+      <p class="modal-subtitle">Seleccione especialidad...</p>
+      
+      <!-- Selector de especialidad -->
+      <div class="form-group mb-3">
+        <select class="form-select-modal" [(ngModel)]="interconsultaData.especialidad">
+          <option value="Pediatría">Pediatría</option>
+          <option value="Psiquiatría">Psiquiatría</option>
+          <option value="Neurología">Neurología</option>
+          <option value="Cardiología">Cardiología</option>
+          <option value="Traumatología">Traumatología</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Footer del modal -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-continue" (click)="continueInterconsulta()">
+        Continuar
+      </button>
+    </div>
+
+  </div>
 </div>
 

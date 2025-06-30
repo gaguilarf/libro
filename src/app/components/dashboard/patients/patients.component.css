@@ -40,6 +40,10 @@
 
 h1 {
   padding-left: 10px;
+  color: #087FB9;
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Estilos para el formulario de paciente */
@@ -170,6 +174,13 @@ h1 {
   margin-inline: 10px;
 }
 
+::ng-deep .flex-fill{
+  padding-right: 5px;
+}
+
+::ng-deep .table-container {
+  padding-inline: 10px;
+}
 ::ng-deep .nav-links {
   padding-left: 10px !important;
 }
@@ -311,6 +322,20 @@ h1 {
   min-width: 140px;
 }
 
+::ng-deep .row > * {
+  align-items: stretch;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
+}
+
+::ng-deep .col-md-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 960px) {
   .form-layout {
@@ -331,6 +356,14 @@ h1 {
     flex: 1 1 45%;
     min-width: 120px;
   }
+
+  ::ng-deep .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 }
 
 /* Ajustes para pantallas muy pequeñas */
@@ -347,6 +380,14 @@ h1 {
   .action-button {
     flex: 1 1 100%;
   }
+
+  ::ng-deep .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 }
 
 /* Estilos responsivos */
@@ -358,6 +399,14 @@ h1 {
   .action-button {
     width: 100%;
     justify-content: center;
+  }
+
+  ::ng-deep .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 }
 
@@ -381,6 +430,14 @@ h1 {
     margin-left: 0;
     margin-bottom: 10px;
   }
+
+  ::ng-deep .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
 }
 
 /* Estilos para los campos de formulario */
@@ -388,6 +445,54 @@ h1 {
 .hospitalization-select {
   width: 250px;
   margin-left: 10px;
+}
+
+/* Estilos personalizados para los campos de búsqueda y select */
+.input-group-text {
+  background-color: white !important;
+  border-color: #087FB9 !important;
+  color: #087FB9 !important;
+}
+
+.form-control {
+  border-color: #087FB9 !important;
+}
+
+.form-control:focus {
+  border-color: #087FB9 !important;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25) !important;
+}
+
+/* Placeholder con color específico */
+.form-control::placeholder {
+  color: #087FB9 !important;
+  opacity: 0.8;
+}
+
+.form-select {
+  border-color: #087FB9 !important;
+  color: #087FB9 !important; /* Color del texto seleccionado */
+}
+
+.form-select:focus {
+  border-color: #087FB9 !important;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25) !important;
+}
+
+/* Estilo para la opción por defecto (placeholder) */
+.form-select option[value=""] {
+  color: #087FB9 !important;
+}
+
+/* Estilo para las opciones seleccionadas */
+.form-select option:checked {
+  color: #087FB9 !important;
+  background-color: rgba(8, 127, 185, 0.1) !important;
+}
+
+/* Iconos con color específico */
+.input-group-text i {
+  color: #087FB9 !important;
 }
 
 /* Remove all borders from form fields */
@@ -475,17 +580,24 @@ h1 {
   border: none !important;
 }
 
+/* Agregar borde inferior a los headers de la tabla */
+.mat-mdc-header-cell {
+  border-bottom: 2px solid #087FB9 !important; /* Más grueso para la cabecera */
+  font-weight: 600 !important;
+}
+
 /* Remove row borders */
 .mat-mdc-row {
   border: none !important;
+  border-bottom: 1px solid #087FB9 !important; /* Línea de separación entre filas */
 }
 
-.mat-mdc-option,
-.mat-mdc-option:hover,
-.mat-mdc-option:focus,
-.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
-  background-color: #ffffff;
+/* Estilo para la fila de cabecera */
+.mat-mdc-header-row {
+  border: none !important;
+  border-bottom: 2px solid #087FB9 !important; /* Línea más gruesa para la cabecera */
 }
+
 /* Style the selected option */
 .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) .mdc-list-item__primary-text,
 .mat-mdc-option .mdc-list-item__primary-text {
@@ -618,6 +730,7 @@ h1 {
 .patient-row {
   cursor: pointer;
   transition: background-color 0.2s ease;
+  border-bottom: 1px solid #087FB9 !important; /* Asegurar línea en todas las filas */
 }
 
 .patient-row:hover {
@@ -665,6 +778,19 @@ h1 {
   display: none !important;
 }
 
+/* Ocultar selector de items por página */
+::ng-deep .mat-mdc-paginator-page-size {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-label {
+  display: none !important;
+}
+
+::ng-deep .mat-mdc-paginator-page-size-select {
+  display: none !important;
+}
+
 /* Centrar los controles de navegación del paginador */
 ::ng-deep .mat-paginator-range-actions {
   justify-content: center;
@@ -673,4 +799,183 @@ h1 {
 
 ::ng-deep .gap-3 {
   padding-right: 10px !important;
+}
+
+/* Estilos para el modal de interconsulta */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  border: 3px solid #087FB9;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  color: #087FB9;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #087FB9;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.btn-close-modal:hover {
+  background-color: rgba(8, 127, 185, 0.1);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.modal-content .form-select,
+.modal-content .form-control {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content .form-select:focus,
+.modal-content .form-control:focus {
+  outline: none;
+  border-color: #087FB9;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25);
+}
+
+.modal-content .form-control::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+.modal-footer {
+  padding: 20px 25px;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.btn-continue {
+  background-color: #f0f8ff;
+  border: 2px solid #3f51b5;
+  color: #3f51b5;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.btn-continue:hover {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(8, 127, 185, 0.3);
+}
+
+.btn-continue:focus,
+.btn-continue:active {
+  background-color: #087fb9;
+  color: white;
+  border-color: #087fb9;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25);
+}
+
+/* Responsivo para el modal */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+  
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 15px 20px;
+  }
+}
+
+/* Estilos adicionales para el modal de interconsulta */
+.modal-subtitle {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.form-select-modal {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #087FB9;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23087FB9' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+}
+
+.form-select-modal:focus {
+  outline: none;
+  border-color: #087FB9;
+  box-shadow: 0 0 0 0.2rem rgba(8, 127, 185, 0.25);
 }

@@ -53,10 +53,22 @@ export class PatientsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Paciente>;
   displayedColumns: string[] = ['dni', 'nombre', 'edad', 'fecha', 'hora', 'ubicacion'];
 
-  // Pagination properties - now handled client-side
+  // Pagination properties - híbrida servidor/cliente
   totalRecords = 0;
-  pageSize = 5;
+  pageSize = 5; // Mostrar de 5 en 5 al usuario
+  serverPageSize = 10; // Cargar de 10 en 10 del servidor
+  currentServerPage = 0; // Página actual del servidor (0-based)
   isLoading = false;
+  
+  // Cache de datos cargados
+  allLoadedPatients: Paciente[] = []; // Todos los pacientes cargados
+  maxLoadedRecords = 0; // Máximo de registros cargados hasta ahora
+
+  // Modal de interconsulta
+  showInterconsultaModal = false;
+  interconsultaData = {
+    especialidad: 'Pediatría'
+  };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -74,9 +86,29 @@ export class PatientsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // Configurar el paginador para client-side pagination
     if (this.paginator) {
       this.paginator.pageSize = this.pageSize;
+      // Escuchar eventos de cambio de página
+      this.paginator.page.subscribe((event: PageEvent) => {
+        this.handlePageChange(event);
+      });
+    }
+  }
+
+  private handlePageChange(event: PageEvent) {
+    const newPageIndex = event.pageIndex;
+    const recordsNeeded = (newPageIndex + 1) * this.pageSize;
+    
+    console.log('📄 Página solicitada:', newPageIndex, 'Registros necesarios:', recordsNeeded);
+    console.log('📊 Registros cargados:', this.maxLoadedRecords);
+    
+    // Si necesitamos más datos de los que tenemos cargados
+    if (recordsNeeded > this.maxLoadedRecords) {
+      console.log('🔄 Necesitamos cargar más datos del servidor');
+      this.loadMorePatientsFromServer();
+    } else {
+      console.log('✅ Usando datos ya cargados');
+      this.updateLocalPagination();
     }
   }
 
@@ -84,28 +116,36 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.corsError = false;
     this.showCorsMessage = false;
+    this.currentServerPage = 0;
+    this.allLoadedPatients = [];
+    this.maxLoadedRecords = 0;
     
-    console.log('🔄 Conectando al backend real:', this.apiUrl);
+    this.loadPatientsFromServer();
+  }
+
+  private loadPatientsFromServer() {
+    const url = `${this.apiUrl}?page=${this.currentServerPage}&limit=${this.serverPageSize}`;
+    console.log('🔄 Cargando del servidor:', url);
     
-    // Intentar conexión directa al backend
-    this.http.get<any>(this.apiUrl).subscribe({
+    this.http.get<any>(url).subscribe({
       next: (response) => {
-        console.log('✅ ¡ÉXITO! Conectado al backend:', response);
+        console.log('✅ Datos recibidos del servidor:', response);
         
-        // Extraer datos del backend real
         if (response && response.data && Array.isArray(response.data)) {
-          this.pacientes = response.data;
-          this.totalRecords = response.pagination ? response.pagination.totalRecords : response.data.length;
+          // Agregar nuevos datos al cache
+          this.allLoadedPatients.push(...response.data);
+          this.maxLoadedRecords = this.allLoadedPatients.length;
           
-          console.log('📋 Pacientes del backend real:', this.pacientes);
-          console.log('📊 Total real:', this.totalRecords);
-        } else {
-          console.warn('⚠️ Estructura inesperada:', response);
-          this.pacientes = [];
-          this.totalRecords = 0;
+          // Actualizar totales
+          if (response.pagination) {
+            this.totalRecords = response.pagination.totalRecords;
+          }
+          
+          console.log('📋 Total cargado:', this.maxLoadedRecords, 'de', this.totalRecords);
+          
+          this.updateLocalPagination();
         }
         
-        this.initializeTable();
         this.isLoading = false;
         this.corsError = false;
       },
@@ -115,51 +155,42 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         if (error.status === 0) {
           this.corsError = true;
           this.showCorsMessage = true;
-          console.log('🔒 CORS bloqueando - Instala extensión CORS para desarrollo');
         }
         
-        // Usar datos de respaldo mientras se resuelve CORS
-        this.useBackupData();
       }
     });
   }
 
-  private useBackupData() {
-    // Datos de respaldo que replican la estructura del backend
-    const backupPatients = [
-      {
-        dni: "01234567",
-        nombre: "Juan Perez",
-        edad: 35,
-        fecha: "01/06/2025",
-        hora: "07:50 AM",
-        ubicacion: "Av. Los Olivos 123"
-      },
-      {
-        dni: "87654321", 
-        nombre: "Maria Garcia",
-        edad: 28,
-        fecha: "02/06/2025",
-        hora: "09:30 AM",
-        ubicacion: "Calle San Martin 456"
-      }
-    ];
+  private loadMorePatientsFromServer() {
+    if (this.maxLoadedRecords >= this.totalRecords) {
+      console.log('📋 Ya tenemos todos los datos');
+      return;
+    }
+    
+    this.currentServerPage++;
+    this.isLoading = true;
+    this.loadPatientsFromServer();
+  }
 
-    console.log('📋 Usando datos de respaldo');
-    this.pacientes = backupPatients;
-    this.totalRecords = backupPatients.length;
+  private updateLocalPagination() {
+    // Tomar solo los datos necesarios para la página actual
+    const startIndex = (this.paginator?.pageIndex || 0) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    
+    this.pacientes = this.allLoadedPatients.slice(startIndex, endIndex);
+    
+    console.log('📄 Mostrando registros:', startIndex + 1, 'a', Math.min(endIndex, this.maxLoadedRecords));
+    
     this.initializeTable();
-    this.isLoading = false;
   }
 
   private initializeTable() {
-    // Crear la fuente de datos con los pacientes
+    // Crear la fuente de datos con los pacientes actuales
     this.dataSource = new MatTableDataSource(this.pacientes);
     
-    // Configurar paginación y ordenamiento del lado del cliente
     setTimeout(() => {
       if (this.paginator) {
-        this.dataSource.paginator = this.paginator;
+        // No asignar dataSource.paginator para control manual
         this.paginator.length = this.totalRecords;
         this.paginator.pageSize = this.pageSize;
       }
@@ -168,7 +199,7 @@ export class PatientsComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
       }
       
-      console.log('✅ Tabla inicializada con', this.totalRecords, 'pacientes');
+      console.log('✅ Tabla actualizada con', this.pacientes.length, 'pacientes');
     }, 0);
   }
 
@@ -186,11 +217,24 @@ export class PatientsComponent implements OnInit, AfterViewInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // Reset to first page when filtering
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    
+    if (filterValue.trim() === '') {
+      // Si no hay filtro, volver a la paginación normal
+      this.updateLocalPagination();
+    } else {
+      // Filtrar sobre todos los datos cargados
+      const filteredData = this.allLoadedPatients.filter(patient => 
+        patient.dni.toLowerCase().includes(filterValue.toLowerCase()) ||
+        patient.nombre.toLowerCase().includes(filterValue.toLowerCase())
+      );
+      
+      this.dataSource = new MatTableDataSource(filteredData);
+      
+      // Resetear paginador para datos filtrados
+      if (this.paginator) {
+        this.paginator.length = filteredData.length;
+        this.paginator.pageIndex = 0;
+      }
     }
   }
 
@@ -199,10 +243,12 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     this.selectedPaciente = paciente;
   }
 
-  // Métodos para las acciones del paciente - actualizados según el diseño
+  // Métodos para las acciones del paciente
   interconsulta() {
-    console.log('Interconsulta para:', this.selectedPaciente?.nombre);
-    // Aquí se implementará la lógica para interconsulta
+    if (this.selectedPaciente) {
+      console.log('Interconsulta para:', this.selectedPaciente?.nombre);
+      this.showInterconsultaModal = true;
+    }
   }
 
   visualizar() {
@@ -214,13 +260,29 @@ export class PatientsComponent implements OnInit, AfterViewInit {
 
   agregar() {
     console.log('Agregar nueva entrada para:', this.selectedPaciente?.nombre);
-    // Aquí se implementará la lógica para agregar
+    // Aquí se implementará la lógica para agregar nueva entrada
   }
-
-  // Remover métodos que ya no se necesitan
-  // agregarHistoria, nuevaSolicitud, notasEnfermeria, recetaMedica
 
   cerrarAcciones() {
     this.selectedPaciente = null;
   }
+
+  // Métodos para el modal de interconsulta
+  closeInterconsultaModal() {
+    this.showInterconsultaModal = false;
+    this.resetInterconsultaData();
+  }
+
+  continueInterconsulta() {
+    console.log('Continuando interconsulta:', this.interconsultaData);
+    // Aquí se implementará la lógica para procesar la interconsulta
+    this.closeInterconsultaModal();
+  }
+
+  private resetInterconsultaData() {
+    this.interconsultaData = {
+      especialidad: 'Pediatría'
+    };
+  }
+
 }

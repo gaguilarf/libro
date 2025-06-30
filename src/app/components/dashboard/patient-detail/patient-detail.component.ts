@@ -24,6 +24,42 @@ export interface PatientDetail {
   familiarEncargado: string;
   estadoActual: string;
   cama: string;
+  historiaEnfermedad?: {
+    fechaIngreso: string;
+    fechaHasta: string;
+    tiempoEnfermedad: string;
+    formaInicio: string;
+    curso: string;
+    sintomas: string;
+  };
+  anamnesis?: string;
+  funcionesBiologicas?: {
+    apetito: string;
+    deposicion: string;
+    sed: string;
+    sueno: string;
+    miccion: string;
+    deseoSexual: string;
+  };
+  antecedentes?: {
+    personales: string;
+    historiaAcademica: string;
+    judiciales: string;
+    patologicos: any;
+    familiares: any;
+    personalidadPrevia: string;
+    socioeconomicos: any;
+  };
+  examenFisico?: {
+    funcionesVitales: any;
+    examenGeneral: string;
+  };
+  evolucion?: Array<{
+    titulo: string;
+    fecha: string;
+    hora: string;
+    contenido: string;
+  }>;
 }
 
 @Component({
@@ -94,5 +130,22 @@ export class PatientDetailComponent implements OnInit {
       return 'No especificado';
     }
     return value;
+  }
+
+  getDefaultEvolucion() {
+    return [
+      {
+        titulo: 'Título (26/06/25) : 18:00',
+        fecha: '26/06/25',
+        hora: '18:00',
+        contenido: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...'
+      },
+      {
+        titulo: 'Título (26/06/25) : 8:00 hrs',
+        fecha: '26/06/25', 
+        hora: '8:00',
+        contenido: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...'
+      }
+    ];
   }
 }

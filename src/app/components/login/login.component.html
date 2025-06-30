@@ -1,9 +1,7 @@
 <div class="login-container">
   <div class="login-card">
     <div class="logo-container">
-        <img src="assets/logo.jpeg" alt="Hospital Salud Logo" class="logo">
-      <div class="logo-text">
-      </div>
+      <img src="assets/logo.jpeg" alt="Hospital Salud Logo" class="logo">
     </div>
     
     <h1 class="welcome-text">Bienvenido(a)</h1>
@@ -20,10 +18,11 @@
           [ngClass]="{'is-invalid': loginForm.get('dni')?.invalid && loginForm.get('dni')?.touched}"
         >
         <div *ngIf="loginForm.get('dni')?.invalid && loginForm.get('dni')?.touched" class="error-message">
+          <i class="bi bi-exclamation-circle"></i>
           Por favor ingrese un DNI válido (8 dígitos)
         </div>
       </div>
-      
+
       <div class="form-group">
         <label for="password">Contraseña</label>
         <div class="password-input">
@@ -33,10 +32,15 @@
             formControlName="password" 
             class="form-control"
             placeholder="Ingrese su contraseña"
+            [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
           >
           <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
             {{ showPassword ? 'Ocultar' : 'Mostrar' }}
           </button>
+        </div>
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-message">
+          <i class="bi bi-exclamation-circle"></i>
+          Por favor ingrese su contraseña
         </div>
       </div>
       
@@ -52,8 +56,9 @@
   </div>
   
   <footer class="footer">
+    
     <div class="footer-links">
-      <a href="#">Ayuda</a>
+      <a href="help">Ayuda</a>
       <span class="divider">|</span>
       <a href="#">Términos y Condiciones</a>
       <span class="divider">|</span>

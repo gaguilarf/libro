@@ -26,8 +26,8 @@
 
 .logo-container {
   text-align: center;
-  padding: 10px 0; /* Más pequeño */
-  margin-bottom: 10px; /* Más pequeño */
+  padding: 10px 0; /* Reducir padding */
+  margin-bottom: 10px; /* Reducir margin */
   border-bottom: 1px solid var(--bs-border-color, #e0e0e0);
   flex-shrink: 0;
 }
@@ -57,7 +57,7 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  height: calc(100vh - 120px); /* Ajustar para dar más espacio al bottom */
+  height: calc(100vh - 140px); /* Ajustar para compensar el título extra */
 }
 
 /* Navigation links and Angular Material overrides */
@@ -69,7 +69,7 @@
   overflow-y: auto;
   padding-right: 5px;
   margin-bottom: 10px;
-  max-height: calc(100vh - 270px);
+  max-height: calc(100vh - 310px); /* Ajustar para dar más espacio al bottom */
 }
 
 .nav-links .mat-list-item-content {
@@ -101,7 +101,7 @@
   flex-shrink: 0;
   padding-top: 0.5rem;
   border-top: 1px solid var(--bs-border-color, #e0e0e0);
-  height: 72px; /* Aumentar un poco más para ver la versión completa */
+  height: 76px; /* Aumentar altura para que se vea la versión completa */
   display: flex;
   padding-inline: 20px;
   flex-direction: column;
@@ -160,4 +160,22 @@
 ::ng-deep .mat-drawer-inner-container {
   overflow: hidden !important;
   height: 100% !important;
+}
+
+/* Estilos para opciones de listas desplegables - siempre fondo blanco */
+::ng-deep .mat-mdc-option.mdc-list-item {
+  align-items: center;
+  background: rgba(255, 255, 255, 1) !important; /* Fondo blanco sólido */
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item:hover {
+  background: rgba(245, 245, 245, 1) !important; /* Gris claro en hover */
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item:focus {
+  background: rgba(240, 240, 240, 1) !important; /* Gris claro en focus */
+}
+
+::ng-deep .mat-mdc-option.mdc-list-item.mat-mdc-option-active {
+  background: rgba(235, 235, 235, 1) !important; /* Gris claro cuando está activo */
 }
