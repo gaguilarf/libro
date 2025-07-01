@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redireccionando...</title>
+    <script>
+        // Obtener la ruta actual
+        const path = window.location.pathname;
+        // Redirigir a index.html con la ruta como parámetro
+        window.location.href = '/index.html' + (path === '/' ? '' : '?redirect=' + encodeURIComponent(path));
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="0;url=/" />
+    </noscript>
+</head>
+<body>
+    <p>Redirigiendo... Si no eres redirigido automáticamente, <a href="/">haz clic aquí</a>.</p>
+</body>
+</html>
