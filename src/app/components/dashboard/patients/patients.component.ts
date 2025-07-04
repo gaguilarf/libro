@@ -70,6 +70,12 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     especialidad: 'Pediatría'
   };
 
+  // Modal de agregar 
+  showAgregarModal = false;
+  agregarData = {
+    tipoDocumento: 'Historia Clínica'
+  };
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -259,9 +265,11 @@ export class PatientsComponent implements OnInit, AfterViewInit {
   }
 
   agregar() {
+  if (this.selectedPaciente) {
     console.log('Agregar nueva entrada para:', this.selectedPaciente?.nombre);
-    // Aquí se implementará la lógica para agregar nueva entrada
+    this.showAgregarModal = true; 
   }
+}
 
   cerrarAcciones() {
     this.selectedPaciente = null;
@@ -282,6 +290,25 @@ export class PatientsComponent implements OnInit, AfterViewInit {
   private resetInterconsultaData() {
     this.interconsultaData = {
       especialidad: 'Pediatría'
+    };
+  }
+
+  // Métodos para el modal de agregar 
+  closeAgregarModal() {
+    this.showAgregarModal = false;
+    this.resetAgregarData();
+  }
+
+  continueAgregar() {
+    console.log('Continuando agregar:', this.agregarData);
+    console.log('Para paciente:', this.selectedPaciente?.nombre);
+    // Aquí se implementará la lógica para procesar el documento seleccionado
+    this.closeAgregarModal();
+  }
+
+  private resetAgregarData() {
+    this.agregarData = {
+      tipoDocumento: 'Historia Clínica'
     };
   }
 
