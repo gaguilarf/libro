@@ -7,15 +7,16 @@
 .topbar {
   background-color: var(--bs-light, #f0f8ff);
   border-bottom: 1px solid var(--bs-border-color, #e0e0e0);
-  height: 72px;
+  height: 100px;
   flex-shrink: 0;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.topbar img.logo {
-  max-height: 48px;
+.logo {
+  height: 80px;
+  object-fit: contain;
 }
 
 .topbar h1 {
@@ -37,7 +38,8 @@ nav a.active {
   font-weight: 600;
 }
 
-nav a:hover {
+nav a:hover,
+.logout-item:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
@@ -49,12 +51,43 @@ nav a:hover {
   transition: background-color 0.2s ease;
 }
 
-.logout-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
 .content {
   flex: 1;
   overflow-y: auto;
   background-color: #fff;
+}
+
+.nav-icon {
+  width: 1.7rem !important;
+  height: 1.7rem !important;
+  object-fit: contain;
+  margin-right: 0.5rem;
+}
+
+.perfil-box {
+  background-color: #e6f5fb;
+  padding: 0.3rem 0.75rem;
+  border-radius: 10px;
+}
+
+.perfil-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.perfil-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.perfil-nombre {
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.perfil-correo {
+  font-size: 0.875rem;
+  color: #6c757d;
 }
