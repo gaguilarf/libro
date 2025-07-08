@@ -1,0 +1,14 @@
+<div class="index-container">
+  <h5 class="index-title">
+    <i class="bi bi-list-ul me-2"></i>
+    Navegación
+  </h5>
+  <ul class="index-list">
+    <li *ngFor="let section of sections" 
+        (click)="scrollTo(section.id)"
+        class="index-item">
+      <i class="bi bi-chevron-right me-2"></i>
+      {{ section.title }}
+    </li>
+  </ul>
+</div>

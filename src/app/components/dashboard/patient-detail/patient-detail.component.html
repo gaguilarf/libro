@@ -33,8 +33,13 @@
   </div>
 
   <!-- Patient Info -->
-  <div *ngIf="patient && !isLoading" class="patient-info">
-    
+  <div *ngIf="patient && !isLoading" class="row">
+
+    <!-- Índice -->
+<!--     <div class="col-md-3 mb-4">
+      <app-index (sectionSelected)="scrollToSection($event)"></app-index>
+    </div> -->
+
     <!-- Patient Name and Basic Info -->
     <div class="patient-header">
       <div class="row align-items-center">
@@ -59,367 +64,374 @@
       </div>
     </div>
 
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">DATOS DE AFILIACIÓN</h3>
-      </div>
-      <div class="card-body">
-        <!-- Row 1 -->
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label text-muted">Nombre:</label>
-            <div class="form-control-plaintext">{{ patient.nombre }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">DNI:</label>
-            <div class="form-control-plaintext">{{ patient.dni }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Sexo:</label>
-            <div class="form-control-plaintext text-capitalize">{{ patient.sexo }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Edad:</label>
-            <div class="form-control-plaintext">{{ patient.edad }}</div>
-          </div>
-        </div>
 
-        <!-- Row 2 -->
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label text-muted">Ap. Paterno:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.apellidoPaterno) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Ap. Materno:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.apellidoMaterno) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Religión:</label>
-            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.religion) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Grupo sanguíneo:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.grupoSanguineo) }}</div>
-          </div>
-        </div>
+    <!-- Contenido -->
+    <div class="col-md-9">
 
-        <!-- Row 3 -->
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label text-muted">Fec. Nac.:</label>
-            <div class="form-control-plaintext">{{ formatDate(patient.fecNac) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Factor RH:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.factorRH) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Ocupación:</label>
-            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.ocupacion) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Familiar encargado:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.familiarEncargado) }}</div>
-          </div>
+      <!-- Filiación -->
+      <div id="datos-afiliacion" class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">DATOS DE AFILIACIÓN</h3>
         </div>
-
-        <!-- Row 4 -->
-        <div class="row mb-3">
-          <div class="col-md-3">
-            <label class="form-label text-muted">Lugar Nac.:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.lugarNac) }}</div>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label text-muted">Est. Civil:</label>
-            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.estCivil) }}</div>
-          </div>
-          <div class="col-md-6">
-            <label class="form-label text-muted">Dirección:</label>
-            <div class="form-control-plaintext">{{ formatValue(patient.direccion) }}</div>
-          </div>
-        </div>
-
-        <!-- Row 5 -->
-        <div class="row">
-          <div class="col-md-3">
-            <label class="form-label text-muted">Grado Inst.:</label>
-            <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.gradoInst) }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- History Section -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">Historia de la Enfermedad</h3>
-      </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-md-6">
-            <label class="form-label text-muted">Fecha ingreso</label>
-            <div class="row">
-              <div class="col-6">
-                <label class="form-label small">Desde:</label>
-                <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaIngreso || formatDate(patient?.fecNac || '') }}</div>
-              </div>
-              <div class="col-6">
-                <label class="form-label small">Hasta:</label>
-                <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaHasta || '30/05/2025' }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Tiempo de enfermedad:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.tiempoEnfermedad || '11 años' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Forma de inicio:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.formaInicio || 'Insidioso' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Curso:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.curso || 'Progresivo' }}</div>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-12">
-            <label class="form-label text-muted">Síntomas y signos principales:</label>
-            <div class="form-control-plaintext border p-3">
-              {{ patient?.historiaEnfermedad?.sintomas || 'Consumo excesivo de sustancias psicoactivas, impulsividad' }}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Anamnesis -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">ANAMNESIS</h3>
-      </div>
-      <div class="card-body">
-        <div class="anamnesis-content">
-          {{ patient?.anamnesis || 'Familiares refieren que paciente empieza el consumo de bebidas alcohólicas al terminar la secundaria, lo hace de manera eventual, al terminar el colegio continúa con el consumo de bebidas alcohólicas, en algunas ocasiones se iba a las clases del instituto. Consumo se va intensificando con el tiempo, se realiza cortes en el antebrazo durante la adolescencia...' }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Funciones Biológicas -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">Funciones Biológicas</h3>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-2">
-            <label class="form-label text-muted">Apetito</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.apetito || 'Conservado' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Sed</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sed || 'Conservado' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Sueño</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sueno || 'Aumentado' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Deposición</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deposicion || 'Conservado' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Micción</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.miccion || 'Conservado' }}</div>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label text-muted">Deseo Sexual</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deseoSexual || 'Conservado' }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Antecedentes -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">ANTECEDENTES</h3>
-      </div>
-      <div class="card-body">
-        <!-- Personales -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Personales</h5>
-          <div class="antecedentes-content border p-3">
-            {{ patient?.antecedentes?.personales || 'PERINATALES, PRENATALES Y POSTNATALES: parto normal a los 9 meses, controles prenatales aparentemente completos, intranquilizarlo, no precisa más datos...' }}
-          </div>
-        </div>
-
-        <!-- Historia Académica -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">HISTORIA ACADÉMICA</h5>
-          <div class="antecedentes-content border p-3">
-            {{ patient?.antecedentes?.historiaAcademica || 'Jardín y primaria: buen desenvolvimiento académico, le gustaba estudiar, no tuvo problemas con sus compañeros y docentes, cursó satisfactoriamente sus estudios...' }}
-          </div>
-        </div>
-
-        <!-- Judiciales -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Judiciales</h5>
-          <div class="form-control-plaintext border p-3">
-            {{ patient?.antecedentes?.judiciales || 'Niega' }}
-          </div>
-        </div>
-
-        <!-- Patológicos -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Patológicos</h5>
-          <div class="row mb-2">
-            <div class="col-md-3">
-              <label class="form-label text-muted small">Enfermedades Crónicas</label>
-              <div class="form-control-plaintext">Niega</div>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label text-muted small">Transfusiones</label>
-              <div class="form-control-plaintext">Niega</div>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label text-muted small">Enfermedades Neurológicas</label>
-              <div class="form-control-plaintext">Niega</div>
-            </div>
-            <div class="col-md-3">
-              <label class="form-label text-muted small">RAM</label>
-              <div class="form-control-plaintext">Niega</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Familiares -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Familiares</h5>
+        <div class="card-body">
+          <!-- Row 1 -->
           <div class="row mb-3">
-            <div class="col-md-4">
-              <label class="form-label text-muted">Estado Padre</label>
-              <div class="form-control-plaintext">Vivo aparentemente sano</div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Nombre:</label>
+              <div class="form-control-plaintext">{{ patient.nombre }}</div>
             </div>
-            <div class="col-md-4">
-              <label class="form-label text-muted">Hermanos</label>
-              <div class="form-control-plaintext">no refiere</div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">DNI:</label>
+              <div class="form-control-plaintext">{{ patient.dni }}</div>
             </div>
-            <div class="col-md-4">
-              <label class="form-label text-muted">Estado Madre</label>
-              <div class="form-control-plaintext">Vivo aparentemente sano</div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Sexo:</label>
+              <div class="form-control-plaintext text-capitalize">{{ patient.sexo }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Edad:</label>
+              <div class="form-control-plaintext">{{ patient.edad }}</div>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label text-muted">Ap. Paterno:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.apellidoPaterno) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Ap. Materno:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.apellidoMaterno) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Religión:</label>
+              <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.religion) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Grupo sanguíneo:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.grupoSanguineo) }}</div>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label text-muted">Fec. Nac.:</label>
+              <div class="form-control-plaintext">{{ formatDate(patient.fecNac) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Factor RH:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.factorRH) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Ocupación:</label>
+              <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.ocupacion) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Familiar encargado:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.familiarEncargado) }}</div>
+            </div>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="row mb-3">
+            <div class="col-md-3">
+              <label class="form-label text-muted">Lugar Nac.:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.lugarNac) }}</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label text-muted">Est. Civil:</label>
+              <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.estCivil) }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label text-muted">Dirección:</label>
+              <div class="form-control-plaintext">{{ formatValue(patient.direccion) }}</div>
+            </div>
+          </div>
+
+          <!-- Row 5 -->
+          <div class="row">
+            <div class="col-md-3">
+              <label class="form-label text-muted">Grado Inst.:</label>
+              <div class="form-control-plaintext text-capitalize">{{ formatValue(patient.gradoInst) }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- History Section -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">Historia de la Enfermedad</h3>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label text-muted">Fecha ingreso</label>
+              <div class="row">
+                <div class="col-6">
+                  <label class="form-label small">Desde:</label>
+                  <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaIngreso || formatDate(patient?.fecNac || '') }}</div>
+                </div>
+                <div class="col-6">
+                  <label class="form-label small">Hasta:</label>
+                  <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaHasta || '30/05/2025' }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Tiempo de enfermedad:</label>
+              <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.tiempoEnfermedad || '11 años' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Forma de inicio:</label>
+              <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.formaInicio || 'Insidioso' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Curso:</label>
+              <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.curso || 'Progresivo' }}</div>
             </div>
           </div>
           
-          <div class="mb-3">
-            <label class="form-label text-muted">PERSONALIDAD PREVIA</label>
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label text-muted">Síntomas y signos principales:</label>
+              <div class="form-control-plaintext border p-3">
+                {{ patient?.historiaEnfermedad?.sintomas || 'Consumo excesivo de sustancias psicoactivas, impulsividad' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anamnesis -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">ANAMNESIS</h3>
+        </div>
+        <div class="card-body">
+          <div class="anamnesis-content">
+            {{ patient?.anamnesis || 'Familiares refieren que paciente empieza el consumo de bebidas alcohólicas al terminar la secundaria, lo hace de manera eventual, al terminar el colegio continúa con el consumo de bebidas alcohólicas, en algunas ocasiones se iba a las clases del instituto. Consumo se va intensificando con el tiempo, se realiza cortes en el antebrazo durante la adolescencia...' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Funciones Biológicas -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">Funciones Biológicas</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <label class="form-label text-muted">Apetito</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.apetito || 'Conservado' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Sed</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sed || 'Conservado' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Sueño</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sueno || 'Aumentado' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Deposición</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deposicion || 'Conservado' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Micción</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.miccion || 'Conservado' }}</div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label text-muted">Deseo Sexual</label>
+              <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deseoSexual || 'Conservado' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Antecedentes -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">ANTECEDENTES</h3>
+        </div>
+        <div class="card-body">
+          <!-- Personales -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Personales</h5>
             <div class="antecedentes-content border p-3">
-              {{ patient?.antecedentes?.personalidadPrevia || 'Niñez: Alegre, se relacionaba con aparente normalidad; Adolescencia: Se relacionaba con aparente normalidad por momentos impulsivos...' }}
+              {{ patient?.antecedentes?.personales || 'PERINATALES, PRENATALES Y POSTNATALES: parto normal a los 9 meses, controles prenatales aparentemente completos, intranquilizarlo, no precisa más datos...' }}
             </div>
           </div>
-        </div>
 
-        <!-- Socioeconómicos -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Socioeconómicos</h5>
-          <div class="row mb-2">
-            <div class="col-md-6">
-              <label class="form-label text-muted">Vivienda</label>
-              <div class="form-control-plaintext">Propia, de material noble</div>
-            </div>
-            <div class="col-md-6">
-              <label class="form-label text-muted">Agua y saneamiento</label>
-              <div class="form-control-plaintext">Cuenta con servicios básicos</div>
+          <!-- Historia Académica -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">HISTORIA ACADÉMICA</h5>
+            <div class="antecedentes-content border p-3">
+              {{ patient?.antecedentes?.historiaAcademica || 'Jardín y primaria: buen desenvolvimiento académico, le gustaba estudiar, no tuvo problemas con sus compañeros y docentes, cursó satisfactoriamente sus estudios...' }}
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12">
-              <label class="form-label text-muted">Sustento económico</label>
-              <div class="form-control-plaintext">Actualmente depende económicamente de familiares</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Examen Físico -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">Examen Físico</h3>
-      </div>
-      <div class="card-body">
-        <!-- Funciones Vitales -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">FUNCIONES VITALES</h5>
-          <div class="row">
-            <div class="col-md-2">
-              <label class="form-label text-muted small">P/A</label>
-              <div class="form-control-plaintext">110/70 mmHg</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">F.C</label>
-              <div class="form-control-plaintext">83/min</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">F.R</label>
-              <div class="form-control-plaintext">18 RPM</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">SatO2</label>
-              <div class="form-control-plaintext">110/70 mmHg</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">T°</label>
-              <div class="form-control-plaintext">36.5</div>
+          <!-- Judiciales -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Judiciales</h5>
+            <div class="form-control-plaintext border p-3">
+              {{ patient?.antecedentes?.judiciales || 'Niega' }}
             </div>
           </div>
-        </div>
 
-        <!-- Examen General -->
-        <div class="mb-4">
-          <h5 class="section-subtitle">Examen General</h5>
-          <div class="row mb-2">
-            <div class="col-md-2">
-              <label class="form-label text-muted small">Peso</label>
-              <div class="form-control-plaintext">86.7 kg</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">Talla</label>
-              <div class="form-control-plaintext">1.58 cm</div>
-            </div>
-            <div class="col-md-2">
-              <label class="form-label text-muted small">IMC</label>
-              <div class="form-control-plaintext">22.7</div>
+          <!-- Patológicos -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Patológicos</h5>
+            <div class="row mb-2">
+              <div class="col-md-3">
+                <label class="form-label text-muted small">Enfermedades Crónicas</label>
+                <div class="form-control-plaintext">Niega</div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-muted small">Transfusiones</label>
+                <div class="form-control-plaintext">Niega</div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-muted small">Enfermedades Neurológicas</label>
+                <div class="form-control-plaintext">Niega</div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-muted small">RAM</label>
+                <div class="form-control-plaintext">Niega</div>
+              </div>
             </div>
           </div>
-          
-          <div class="antecedentes-content border p-3">
-            {{ patient?.examenFisico?.examenGeneral || 'PACIENTE EN REG, BEH, BIEN ventilación espontánea. Piel tibia, turgencia y elasticidad conservada. TCSC conservado en cantidad, limitado: cepillo = 2 segundos, pelo negro en regular cantidad...' }}
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Evolución -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">EVOLUCIÓN</h3>
-      </div>
-      <div class="card-body">
-        <div *ngFor="let evolucion of patient?.evolucion || getDefaultEvolucion()" class="evolucion-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="evolucion-title">{{ evolucion.titulo }}</h6>
-            <button class="btn btn-sm btn-outline-primary">
-              <i class="bi bi-plus-circle"></i>
-            </button>
+          <!-- Familiares -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Familiares</h5>
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label class="form-label text-muted">Estado Padre</label>
+                <div class="form-control-plaintext">Vivo aparentemente sano</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted">Hermanos</label>
+                <div class="form-control-plaintext">no refiere</div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-muted">Estado Madre</label>
+                <div class="form-control-plaintext">Vivo aparentemente sano</div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label text-muted">PERSONALIDAD PREVIA</label>
+              <div class="antecedentes-content border p-3">
+                {{ patient?.antecedentes?.personalidadPrevia || 'Niñez: Alegre, se relacionaba con aparente normalidad; Adolescencia: Se relacionaba con aparente normalidad por momentos impulsivos...' }}
+              </div>
+            </div>
           </div>
-          <div class="evolucion-content border p-3">
-            {{ evolucion.contenido }}
+
+          <!-- Socioeconómicos -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Socioeconómicos</h5>
+            <div class="row mb-2">
+              <div class="col-md-6">
+                <label class="form-label text-muted">Vivienda</label>
+                <div class="form-control-plaintext">Propia, de material noble</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label text-muted">Agua y saneamiento</label>
+                <div class="form-control-plaintext">Cuenta con servicios básicos</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-label text-muted">Sustento económico</label>
+                <div class="form-control-plaintext">Actualmente depende económicamente de familiares</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- Examen Físico -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">Examen Físico</h3>
+        </div>
+        <div class="card-body">
+          <!-- Funciones Vitales -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">FUNCIONES VITALES</h5>
+            <div class="row">
+              <div class="col-md-2">
+                <label class="form-label text-muted small">P/A</label>
+                <div class="form-control-plaintext">110/70 mmHg</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">F.C</label>
+                <div class="form-control-plaintext">83/min</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">F.R</label>
+                <div class="form-control-plaintext">18 RPM</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">SatO2</label>
+                <div class="form-control-plaintext">110/70 mmHg</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">T°</label>
+                <div class="form-control-plaintext">36.5</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Examen General -->
+          <div class="mb-4">
+            <h5 class="section-subtitle">Examen General</h5>
+            <div class="row mb-2">
+              <div class="col-md-2">
+                <label class="form-label text-muted small">Peso</label>
+                <div class="form-control-plaintext">86.7 kg</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">Talla</label>
+                <div class="form-control-plaintext">1.58 cm</div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label text-muted small">IMC</label>
+                <div class="form-control-plaintext">22.7</div>
+              </div>
+            </div>
+            
+            <div class="antecedentes-content border p-3">
+              {{ patient?.examenFisico?.examenGeneral || 'PACIENTE EN REG, BEH, BIEN ventilación espontánea. Piel tibia, turgencia y elasticidad conservada. TCSC conservado en cantidad, limitado: cepillo = 2 segundos, pelo negro en regular cantidad...' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evolución -->
+      <div class="card mt-4">
+        <div class="card-header">
+          <h3 class="mb-0">EVOLUCIÓN</h3>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let evolucion of patient?.evolucion || getDefaultEvolucion()" class="evolucion-item mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="evolucion-title">{{ evolucion.titulo }}</h6>
+              <button class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-plus-circle"></i>
+              </button>
+            </div>
+            <div class="evolucion-content border p-3">
+              {{ evolucion.contenido }}
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>

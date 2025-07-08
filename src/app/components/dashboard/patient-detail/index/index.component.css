@@ -1,0 +1,43 @@
+.index-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.index-title {
+  color: #087fb9;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.index-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.index-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.index-item:hover {
+  background-color: #f8f9fa;
+  color: #065a8a;
+}
+
+.index-item:last-child {
+  border-bottom: none;
+}
+
+.index-item i {
+  font-size: 0.8rem;
+  color: #087fb9;
+}
