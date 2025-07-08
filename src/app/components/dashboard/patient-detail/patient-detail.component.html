@@ -403,24 +403,30 @@
     </div>
 
     <!-- Evolución -->
-    <div class="card mt-4">
-      <div class="card-header">
-        <h3 class="mb-0">EVOLUCIÓN</h3>
+   <!-- Evolución -->
+<div class="card mt-4">
+  <div class="card-header">
+    <h3 class="mb-0">EVOLUCIÓN</h3>
+  </div>
+  <div class="card-body">
+    <!-- Botón agregado aquí, al mismo nivel que las evoluciones -->
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-plus-circle me-1"></i>
+      </button>
+    </div>
+    
+    <!-- Lista de evoluciones -->
+    <div *ngFor="let evolucion of patient?.evolucion || getDefaultEvolucion()" class="evolucion-item mb-4">
+      <div class="mb-2">
+        <h6 class="evolucion-title">{{ evolucion.titulo }}</h6>
       </div>
-      <div class="card-body">
-        <div *ngFor="let evolucion of patient?.evolucion || getDefaultEvolucion()" class="evolucion-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="evolucion-title">{{ evolucion.titulo }}</h6>
-            <button class="btn btn-sm btn-outline-primary">
-              <i class="bi bi-plus-circle"></i>
-            </button>
-          </div>
-          <div class="evolucion-content border p-3">
-            {{ evolucion.contenido }}
-          </div>
-        </div>
+      <div class="evolucion-content border p-3">
+        {{ evolucion.contenido }}
       </div>
     </div>
+  </div>
+</div>
 
   </div>
 </div>
