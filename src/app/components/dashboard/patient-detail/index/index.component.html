@@ -1,14 +1,49 @@
 <div class="index-container">
-  <h5 class="index-title">
-    <i class="bi bi-list-ul me-2"></i>
-    Navegación
-  </h5>
-  <ul class="index-list">
-    <li *ngFor="let section of sections" 
-        (click)="scrollTo(section.id)"
-        class="index-item">
-      <i class="bi bi-chevron-right me-2"></i>
-      {{ section.title }}
-    </li>
-  </ul>
+  <!-- Filtro fijo arriba -->
+  <div class="index-filter">
+
+    <input
+      type="text"
+      class="form-control mb-2"
+      [(ngModel)]="searchTerm"
+      placeholder="🔍 Buscar sección..."
+    />
+  </div>
+  <br>
+  
+    <h5 class="index-title">
+      <i class="bi bi-list-ul me-2"></i> Acto Médico
+    </h5>
+  <!-- Secciones con scroll -->
+  <div class="index-scroll">
+    <div class="index-table-header row fw-bold mb-2">
+      <div class="col-6">Sección</div>
+      <div class="col-3 text-center">Fecha</div>
+      <div class="col-3 text-center">Modificado</div>
+    </div>
+
+    <ul class="list-unstyled index-list">
+      <li *ngFor="let section of getFilteredSections()">
+        <div class="row index-item" (click)="scrollTo(section.id)">
+          <div class="col-6">
+            <i class="bi bi-chevron-right me-1"></i> {{ section.title }}
+          </div>
+          <div class="col-3 text-center">{{ section.fecha || '—' }}</div>
+          <div class="col-3 text-center">{{ section.modificado || '—' }}</div>
+        </div>
+
+        <ul class="list-unstyled ms-3" *ngIf="section.subsections?.length">
+          <li *ngFor="let sub of section.subsections">
+            <div class="row index-subitem" (click)="scrollTo(sub.id)">
+              <div class="col-6">
+                <i class="bi bi-dot me-1"></i> {{ sub.title }}
+              </div>
+              <div class="col-3 text-center">{{ sub.fecha || '—' }}</div>
+              <div class="col-3 text-center">{{ sub.modificado || '—' }}</div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </div>
