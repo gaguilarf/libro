@@ -132,11 +132,11 @@
       <div class="row">
         <div class="col-md-2">
           <label class="form-label text-muted">Estado Actual</label>
-          <select class="form-select">
-            <option>Hospitalización</option>
-            <option>Emergencia</option>
-            <option>Consulta Externa</option>
-          </select>
+            <select class="form-select" disabled>
+              <option selected>Hospitalización</option>
+              <option>Emergencia</option>
+              <option>Consulta Externa</option>
+            </select>
         </div>
         
         <div class="col-md-2">
@@ -247,4 +247,40 @@
 
   </div>
 </div>
+
+<!-- Modal de Agregar - NUEVO -->
+<div *ngIf="showAgregarModal" class="modal-overlay" (click)="closeAgregarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    
+    <!-- Header del modal -->
+    <div class="modal-header">
+      <h3 class="modal-title">Agregar Documento</h3>
+      <button type="button" class="btn-close-modal" (click)="closeAgregarModal()">
+        <i class="bi bi-x-circle"></i>
+      </button>
+    </div>
+
+    <!-- Body del modal -->
+    <div class="modal-body">
+      
+      <p class="modal-subtitle">Seleccione tipo de documento...</p>
+      
+      <!-- Selector de tipo de documento -->
+      <div class="form-group mb-3">
+        <select class="form-select-modal" [(ngModel)]="agregarData.tipoDocumento">
+          <option value="Historia Clínica">Historia Clínica</option>
+          <option value="Examen Físico">Examen Físico</option>
+          <option value="Evolución">Evolución</option>
+          <option value="Receta Médica">Receta Médica</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Footer del modal -->
+    <div class="modal-footer">
+      <button type="button" class="btn btn-continue" (click)="continueAgregar()">
+        Continuar
+      </button>
+    </div>
 
