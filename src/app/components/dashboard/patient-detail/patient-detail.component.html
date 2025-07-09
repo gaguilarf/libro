@@ -162,25 +162,25 @@
             <div class="row">
               <div class="col-6">
                 <label class="form-label small">Desde:</label>
-                <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaIngreso || formatDate(patient?.fecNac || '') }}</div>
+                <div class="form-control-plaintext">{{ getHistoriaEnfermedadField('fechaIngreso', formatDate(patient?.fecNac || '')) }}</div>
               </div>
               <div class="col-6">
                 <label class="form-label small">Hasta:</label>
-                <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.fechaHasta || '30/05/2025' }}</div>
+                <div class="form-control-plaintext">{{ getHistoriaEnfermedadField('fechaHasta', '30/05/2025') }}</div>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Tiempo de enfermedad:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.tiempoEnfermedad || '11 años' }}</div>
+            <div class="form-control-plaintext">{{ getHistoriaEnfermedadField('tiempoEnfermedad', '11 años') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Forma de inicio:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.formaInicio || 'Insidioso' }}</div>
+            <div class="form-control-plaintext">{{ getHistoriaEnfermedadField('formaInicio', 'Insidioso') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Curso:</label>
-            <div class="form-control-plaintext">{{ patient?.historiaEnfermedad?.curso || 'Progresivo' }}</div>
+            <div class="form-control-plaintext">{{ getHistoriaEnfermedadField('curso', 'Progresivo') }}</div>
           </div>
         </div>
         
@@ -188,7 +188,7 @@
           <div class="col-12">
             <label class="form-label text-muted">Síntomas y signos principales:</label>
             <div class="form-control-plaintext border p-3">
-              {{ patient?.historiaEnfermedad?.sintomas || 'Consumo excesivo de sustancias psicoactivas, impulsividad' }}
+              {{ getHistoriaEnfermedadField('sintomas', 'Consumo excesivo de sustancias psicoactivas, impulsividad') }}
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@
       </div>
       <div class="card-body">
         <div class="anamnesis-content">
-          {{ patient?.anamnesis || 'Familiares refieren que paciente empieza el consumo de bebidas alcohólicas al terminar la secundaria, lo hace de manera eventual, al terminar el colegio continúa con el consumo de bebidas alcohólicas, en algunas ocasiones se iba a las clases del instituto. Consumo se va intensificando con el tiempo, se realiza cortes en el antebrazo durante la adolescencia...' }}
+          {{ patient?.anamnesis || 'Familiares refieren que paciente empieza el consumo de bebidas alcohólicas...' }}
         </div>
       </div>
     </div>
@@ -216,27 +216,27 @@
         <div class="row">
           <div class="col-md-2">
             <label class="form-label text-muted">Apetito</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.apetito || 'Conservado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('apetito', 'Conservado') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Sed</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sed || 'Conservado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('sed', 'Conservado') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Sueño</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.sueno || 'Aumentado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('sueno', 'Aumentado') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Deposición</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deposicion || 'Conservado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('deposicion', 'Conservado') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Micción</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.miccion || 'Conservado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('miccion', 'Conservado') }}</div>
           </div>
           <div class="col-md-2">
             <label class="form-label text-muted">Deseo Sexual</label>
-            <div class="form-control-plaintext">{{ patient?.funcionesBiologicas?.deseoSexual || 'Conservado' }}</div>
+            <div class="form-control-plaintext">{{ getFuncionesBiologicasField('deseoSexual', 'Conservado') }}</div>
           </div>
         </div>
       </div>
@@ -252,7 +252,7 @@
         <div class="mb-4">
           <h5 class="section-subtitle">Personales</h5>
           <div class="antecedentes-content border p-3">
-            {{ patient?.antecedentes?.personales || 'PERINATALES, PRENATALES Y POSTNATALES: parto normal a los 9 meses, controles prenatales aparentemente completos, intranquilizarlo, no precisa más datos...' }}
+            {{ getAntecedentesField('personales', 'PERINATALES, PRENATALES Y POSTNATALES: parto normal a los 9 meses...') }}
           </div>
         </div>
 
@@ -260,7 +260,7 @@
         <div class="mb-4">
           <h5 class="section-subtitle">HISTORIA ACADÉMICA</h5>
           <div class="antecedentes-content border p-3">
-            {{ patient?.antecedentes?.historiaAcademica || 'Jardín y primaria: buen desenvolvimiento académico, le gustaba estudiar, no tuvo problemas con sus compañeros y docentes, cursó satisfactoriamente sus estudios...' }}
+            {{ getAntecedentesField('historiaAcademica', 'Jardín y primaria: buen desenvolvimiento académico...') }}
           </div>
         </div>
 
@@ -268,7 +268,7 @@
         <div class="mb-4">
           <h5 class="section-subtitle">Judiciales</h5>
           <div class="form-control-plaintext border p-3">
-            {{ patient?.antecedentes?.judiciales || 'Niega' }}
+            {{ getAntecedentesField('judiciales', 'Niega') }}
           </div>
         </div>
 
@@ -316,7 +316,7 @@
           <div class="mb-3">
             <label class="form-label text-muted">PERSONALIDAD PREVIA</label>
             <div class="antecedentes-content border p-3">
-              {{ patient?.antecedentes?.personalidadPrevia || 'Niñez: Alegre, se relacionaba con aparente normalidad; Adolescencia: Se relacionaba con aparente normalidad por momentos impulsivos...' }}
+              {{ getAntecedentesField('personalidadPrevia', 'Niñez: Alegre, se relacionaba con aparente normalidad...') }}
             </div>
           </div>
         </div>
@@ -396,7 +396,7 @@
           </div>
           
           <div class="antecedentes-content border p-3">
-            {{ patient?.examenFisico?.examenGeneral || 'PACIENTE EN REG, BEH, BIEN ventilación espontánea. Piel tibia, turgencia y elasticidad conservada. TCSC conservado en cantidad, limitado: cepillo = 2 segundos, pelo negro en regular cantidad...' }}
+            {{ getExamenFisicoField('examenGeneral', 'PACIENTE EN REG, BEH, BIEN ventilación espontánea...') }}
           </div>
         </div>
       </div>

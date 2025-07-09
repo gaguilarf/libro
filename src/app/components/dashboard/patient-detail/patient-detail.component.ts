@@ -24,42 +24,43 @@ export interface PatientDetail {
   familiarEncargado: string;
   estadoActual: string;
   cama: string;
+  // Campos opcionales con tipos correctos
   historiaEnfermedad?: {
-    fechaIngreso: string;
-    fechaHasta: string;
-    tiempoEnfermedad: string;
-    formaInicio: string;
-    curso: string;
-    sintomas: string;
-  };
-  anamnesis?: string;
+    fechaIngreso?: string;
+    fechaHasta?: string;
+    tiempoEnfermedad?: string;
+    formaInicio?: string;
+    curso?: string;
+    sintomas?: string;
+  } | null;
+  anamnesis?: string | null;
   funcionesBiologicas?: {
-    apetito: string;
-    deposicion: string;
-    sed: string;
-    sueno: string;
-    miccion: string;
-    deseoSexual: string;
-  };
+    apetito?: string;
+    deposicion?: string;
+    sed?: string;
+    sueno?: string;
+    miccion?: string;
+    deseoSexual?: string;
+  } | null;
   antecedentes?: {
-    personales: string;
-    historiaAcademica: string;
-    judiciales: string;
-    patologicos: any;
-    familiares: any;
-    personalidadPrevia: string;
-    socioeconomicos: any;
-  };
+    personales?: string;
+    historiaAcademica?: string;
+    judiciales?: string;
+    patologicos?: any;
+    familiares?: any;
+    personalidadPrevia?: string;
+    socioeconomicos?: any;
+  } | null;
   examenFisico?: {
-    funcionesVitales: any;
-    examenGeneral: string;
-  };
+    funcionesVitales?: any;
+    examenGeneral?: string;
+  } | null;
   evolucion?: Array<{
     titulo: string;
     fecha: string;
     hora: string;
     contenido: string;
-  }>;
+  }> | null;
 }
 
 @Component({
@@ -147,5 +148,22 @@ export class PatientDetailComponent implements OnInit {
         contenido: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...'
       }
     ];
+  }
+
+  // Métodos helper para evitar warnings de TypeScript
+  getHistoriaEnfermedadField(field: keyof NonNullable<PatientDetail['historiaEnfermedad']>, defaultValue: string): string {
+    return this.patient?.historiaEnfermedad?.[field] || defaultValue;
+  }
+
+  getFuncionesBiologicasField(field: keyof NonNullable<PatientDetail['funcionesBiologicas']>, defaultValue: string): string {
+    return this.patient?.funcionesBiologicas?.[field] || defaultValue;
+  }
+
+  getAntecedentesField(field: keyof NonNullable<PatientDetail['antecedentes']>, defaultValue: string): string {
+    return this.patient?.antecedentes?.[field] || defaultValue;
+  }
+
+  getExamenFisicoField(field: keyof NonNullable<PatientDetail['examenFisico']>, defaultValue: string): string {
+    return this.patient?.examenFisico?.[field] || defaultValue;
   }
 }
