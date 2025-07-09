@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../shared/material.module';
 import { FormsModule } from '@angular/forms';
+import { IndexComponent, Section } from './index/index.component';
 
 export interface PatientDetail {
   dni: string;
@@ -65,16 +66,21 @@ export interface PatientDetail {
 
 @Component({
   selector: 'app-patient-detail',
-  imports: [CommonModule, MaterialModule, FormsModule],
+  imports: [CommonModule, MaterialModule, FormsModule, IndexComponent],
   templateUrl: './patient-detail.component.html',
   styleUrl: './patient-detail.component.css'
 })
-export class PatientDetailComponent implements OnInit {
-  
+export class PatientDetailComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('sidebarRef') sidebarRef!: ElementRef;
+  buttonLeft = '2px';
+  showSidebar = true;
+
   patient: PatientDetail | null = null;
   isLoading = false;
   error: string | null = null;
-  
+  indexSections: Section[] = [];
+
   private apiUrl = 'https://backhospital.onrender.com/api/pacientes';
 
   constructor(
@@ -92,16 +98,41 @@ export class PatientDetailComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => this.updateButtonPosition(), 0);
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateButtonPosition();
+  }
+
+  toggleSidebar() {
+    this.showSidebar = !this.showSidebar;
+    setTimeout(() => this.updateButtonPosition(), 300);
+  }
+
+  updateButtonPosition() {
+    if (this.showSidebar && this.sidebarRef) {
+      const sidebarWidth = this.sidebarRef.nativeElement.offsetWidth;
+      const leftOffset = this.sidebarRef.nativeElement.getBoundingClientRect().left;
+      this.buttonLeft = `${sidebarWidth + leftOffset}px`;
+    } else {
+      this.buttonLeft = '2px';
+    }
+  }
+
   private loadPatientDetail(dni: string) {
     this.isLoading = true;
     this.error = null;
-    
+
     console.log('🔄 Cargando detalles del paciente:', dni);
-    
+
     this.http.get<PatientDetail>(`${this.apiUrl}/${dni}`).subscribe({
       next: (patient) => {
         console.log('✅ Paciente cargado:', patient);
         this.patient = patient;
+        this.indexSections = this.generateIndexSections(patient);
         this.isLoading = false;
       },
       error: (error) => {
@@ -110,6 +141,60 @@ export class PatientDetailComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  generateIndexSections(patient: PatientDetail): Section[] {
+    return [
+      {
+        id: 'datos-afiliacion',
+        title: 'Datos de Afiliación',
+        fecha: '10/07/2025',
+        modificado: 'Dra. Rivas'
+      },
+      {
+        id: 'historia-enfermedad',
+        title: 'Historia de la Enfermedad',
+        fecha: patient.historiaEnfermedad?.fechaIngreso || 'N/D',
+        modificado: 'Dr. Pérez'
+      },
+      {
+        id: 'anamnesis',
+        title: 'Anamnesis',
+        fecha: '09/07/2025',
+        modificado: 'Dr. Velarde'
+      },
+      {
+        id: 'funciones-biologicas',
+        title: 'Funciones Biológicas',
+        fecha: '08/07/2025',
+        modificado: 'Dra. Ortega'
+      },
+      {
+        id: 'antecedentes',
+        title: 'Antecedentes',
+        fecha: '07/07/2025',
+        modificado: 'Dra. Ramos',
+        subsections: [
+          { id: 'a_personales', title: 'Personales', fecha: '07/07/2025', modificado: 'Dra. Ramos' },
+          { id: 'a_academicos', title: 'Historia Académica', fecha: '07/07/2025', modificado: 'Dra. Ramos' },
+          { id: 'a_judiciales', title: 'Judiciales', fecha: '07/07/2025', modificado: 'Dra. Ramos' },
+          { id: 'a_patologicos', title: 'Patológicos', fecha: '07/07/2025', modificado: 'Dra. Ramos' },
+          { id: 'a_socioeconomicos', title: 'Socioeconómicos', fecha: '07/07/2025', modificado: 'Dra. Ramos' }
+        ]
+      },
+      {
+        id: 'examen-fisico',
+        title: 'Examen Físico',
+        fecha: '06/07/2025',
+        modificado: 'Dr. Cordero'
+      },
+      {
+        id: 'evolucion',
+        title: 'Evolución',
+        fecha: '06/07/2025',
+        modificado: 'Dr. Vega'
+      }
+    ];
   }
 
   goBack() {
@@ -139,13 +224,13 @@ export class PatientDetailComponent implements OnInit {
         titulo: 'Título (26/06/25) : 18:00',
         fecha: '26/06/25',
         hora: '18:00',
-        contenido: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...'
+        contenido: 'Texto de ejemplo para evolución...'
       },
       {
         titulo: 'Título (26/06/25) : 8:00 hrs',
-        fecha: '26/06/25', 
+        fecha: '26/06/25',
         hora: '8:00',
-        contenido: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book...'
+        contenido: 'Texto de ejemplo para evolución...'
       }
     ];
   }
@@ -165,5 +250,20 @@ export class PatientDetailComponent implements OnInit {
 
   getExamenFisicoField(field: keyof NonNullable<PatientDetail['examenFisico']>, defaultValue: string): string {
     return this.patient?.examenFisico?.[field] || defaultValue;
+  }
+
+  scrollToSection(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      element.classList.add('highlight-section');
+      setTimeout(() => {
+        element.classList.remove('highlight-section');
+      }, 1000);
+    }
   }
 }
