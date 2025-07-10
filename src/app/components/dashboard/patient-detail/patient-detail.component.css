@@ -146,27 +146,26 @@
 }
 
 .toggle-sidebar-btn {
-  position: fixed;
+  position: absolute;
   top: 170px;
+  right: -32px;
   z-index: 1000;
-  width: 28px;
+  width: 32px;
   height: 56px;
-  padding: 0.5rem 0.75rem;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0 8px 8px 0;
   border: 2px solid #14aac8;
+  background-color: white;
+  transition: all 0.3s ease;
 }
 
-
-
-/* Cuando el sidebar está visible, el botón se pega a su borde derecho */
-.toggle-sidebar-btn.sidebar-visible {
-  right: calc(100% - 42%); /* Aproximadamente donde termina col-md-5 */
+.sidebar-content {
+  position: relative;
 }
 
-/* Cuando está oculto, el botón se va al borde derecho */
-.toggle-sidebar-btn:not(.sidebar-visible) {
-  right: 1rem;
+::ng-deep .col-md-5{
+  padding: 0 0 0 12px;
 }

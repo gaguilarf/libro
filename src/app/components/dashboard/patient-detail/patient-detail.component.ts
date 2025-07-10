@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -73,7 +73,6 @@ export interface PatientDetail {
 export class PatientDetailComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sidebarRef') sidebarRef!: ElementRef;
-  buttonLeft = '2px';
   showSidebar = true;
 
   patient: PatientDetail | null = null;
@@ -99,27 +98,11 @@ export class PatientDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.updateButtonPosition(), 0);
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.updateButtonPosition();
+    // Ya no necesitamos calcular posición del botón
   }
 
   toggleSidebar() {
     this.showSidebar = !this.showSidebar;
-    setTimeout(() => this.updateButtonPosition(), 300);
-  }
-
-  updateButtonPosition() {
-    if (this.showSidebar && this.sidebarRef) {
-      const sidebarWidth = this.sidebarRef.nativeElement.offsetWidth;
-      const leftOffset = this.sidebarRef.nativeElement.getBoundingClientRect().left;
-      this.buttonLeft = `${sidebarWidth + leftOffset}px`;
-    } else {
-      this.buttonLeft = '2px';
-    }
   }
 
   private loadPatientDetail(dni: string) {

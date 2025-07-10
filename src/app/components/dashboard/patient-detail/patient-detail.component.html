@@ -35,19 +35,15 @@
 
   <div class="row position-relative">
 
-    <button 
-      class="toggle-sidebar-btn btn btn-light shadow"
-      (click)="toggleSidebar()"
-      [ngStyle]="{
-        left: showSidebar ? '617px' : '2px'
-      }"
-      title="Mostrar/Ocultar índice"
-    >
-      <i class="bi" [ngClass]="showSidebar ? 'bi-chevron-left' : 'bi-chevron-right'"></i>
-    </button>
-
       <!-- INDICE -->
-      <div *ngIf="showSidebar" class="col-md-5 sidebar-content">
+      <div *ngIf="showSidebar" class="col-md-5 sidebar-content" #sidebarRef>
+        <button 
+          class="toggle-sidebar-btn btn btn-light shadow"
+          (click)="toggleSidebar()"
+          title="Mostrar/Ocultar índice"
+        >
+          <i class="bi bi-chevron-left"></i>
+        </button>
         <div class="sticky-sidebar">
           <app-index
             [sections]="indexSections"
@@ -55,6 +51,17 @@
           </app-index>
         </div>
       </div>
+
+      <!-- Botón cuando sidebar está oculto -->
+      <button 
+        *ngIf="!showSidebar"
+        class="toggle-sidebar-btn btn btn-light shadow"
+        (click)="toggleSidebar()"
+        style="position: fixed; left: 2px; top: 170px; z-index: 1000;"
+        title="Mostrar/Ocultar índice"
+      >
+        <i class="bi bi-chevron-right"></i>
+      </button>
 
       <div class="col">
 
